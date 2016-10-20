@@ -37,7 +37,16 @@ public class PositionIndex
 
     protected virtual void AddEntity(Group collection, Entity entity, int index, IComponent component)
     {
-        var mapPositionComponent = component as MapPositionComponent;
+        Debug.Log("Added " + entity + " to lookup. Current count : " + lookup.Count);
+
+        MapPositionComponent mapPositionComponent = null;
+        
+        foreach(var c in entity.GetComponents())
+        {
+            if (c.GetType() == typeof(MapPositionComponent))
+                mapPositionComponent = (MapPositionComponent)c;
+        }
+
         if (mapPositionComponent != null)
         {
             if (lookup.ContainsKey(mapPositionComponent.Position) && lookup[mapPositionComponent.Position] == entity)

@@ -6,26 +6,23 @@
 //     the code is regenerated.
 // </auto-generated>
 //------------------------------------------------------------------------------
-public static class CoreComponentIds {
+public static class ViewComponentIds {
 
-    public const int Map = 0;
-    public const int MapPosition = 1;
-    public const int Selected = 2;
-    public const int Tile = 3;
+    public const int SelectedListener = 0;
+    public const int TileView = 1;
+    public const int WorldPosition = 2;
 
-    public const int TotalComponents = 4;
+    public const int TotalComponents = 3;
 
     public static readonly string[] componentNames = {
-        "Map",
-        "MapPosition",
-        "Selected",
-        "Tile"
+        "SelectedListener",
+        "TileView",
+        "WorldPosition"
     };
 
     public static readonly System.Type[] componentTypes = {
-        typeof(MapComponent),
-        typeof(MapPositionComponent),
-        typeof(SelectedComponent),
-        typeof(TileComponent)
+        typeof(SelectedListenerComponent),
+        typeof(TileViewComponent),
+        typeof(WorldPositionComponent)
     };
 }

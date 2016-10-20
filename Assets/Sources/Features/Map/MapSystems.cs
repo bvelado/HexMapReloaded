@@ -20,8 +20,8 @@ public class GenerateMapSystem : IInitializeSystem
                 if ((-x - y) >= -radius && (-x - y) <= radius)
                 {
                     Pools.sharedInstance.core.CreateEntity()
-                        .AddMapPosition(new Vector3(x, y, -x - y))
-                        .AddTile("Tile @ ( " + x + " , " + y + " , " + (-x -y) + " )");
+                        .AddTile("Tile @ ( " + x + " , " + y + " , " + (-x - y) + " )")
+                        .AddMapPosition(new Vector3(x, y, -x - y));
                 }
             }
         }
@@ -42,9 +42,17 @@ public class AddTileViewSystem : IReactiveSystem
     {
         foreach(var entity in entities)
         {
-            entity.AddWorldPosition(MapUtilities.MapToWorldPosition(entity.mapPosition.Position));
-            GameObject tileGO = GameObject.Instantiate(Resources.Load("Prefabs/HexTile"), entity.worldPosition.Position, Quaternion.identity) as GameObject;
+            var e = Pools.sharedInstance.view.CreateEntity();
+            e.AddWorldPosition(MapUtilities.MapToWorldPosition(entity.mapPosition.Position));
+            GameObject tileGO = GameObject.Instantiate(Resources.Load("Prefabs/HexTile"), e.worldPosition.Position, Quaternion.identity) as GameObject;
             tileGO.name = entity.tile.Description;
+            var tileView = tileGO.AddComponent<TileView>();
+            if (tileView)
+            {
+                tileView.Initialize(entity.mapPosition.Position);
+                e.AddTileView(tileView);
+                e.AddSelectedListener(tileView);
+            }   
         }
     }
 }

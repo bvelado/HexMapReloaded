@@ -8,8 +8,6 @@ public class GameController : MonoBehaviour
 
     void Start()
     {
-        Random.seed = 42;
-
         var pools = Pools.sharedInstance;
         pools.SetAllPools();
 
@@ -32,8 +30,11 @@ public class GameController : MonoBehaviour
     {
         return new Feature("Systems")
 
-        //// Input
+        // Map
         .Add(pools.core.CreateSystem(new GenerateMapSystem()))
-        .Add(pools.core.CreateSystem(new AddTileViewSystem()));
+        .Add(pools.core.CreateSystem(new AddTileViewSystem()))
+
+        // View
+        .Add(pools.core.CreateSystem(new NotifySelectedListeners()));
     }
 }

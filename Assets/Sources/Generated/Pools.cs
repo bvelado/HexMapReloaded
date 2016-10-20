@@ -22,16 +22,22 @@ namespace Entitas {
             return CreatePool("UI", UIComponentIds.TotalComponents, UIComponentIds.componentNames, UIComponentIds.componentTypes);
         }
 
-        public Pool[] allPools { get { return new [] { core, meta, uI }; } }
+        public static Pool CreateViewPool() {
+            return CreatePool("View", ViewComponentIds.TotalComponents, ViewComponentIds.componentNames, ViewComponentIds.componentTypes);
+        }
+
+        public Pool[] allPools { get { return new [] { core, meta, uI, view }; } }
 
         public Pool core;
         public Pool meta;
         public Pool uI;
+        public Pool view;
 
         public void SetAllPools() {
             core = CreateCorePool();
             meta = CreateMetaPool();
             uI = CreateUIPool();
+            view = CreateViewPool();
         }
     }
 }

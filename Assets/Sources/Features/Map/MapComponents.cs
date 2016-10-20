@@ -8,7 +8,7 @@ public class MapPositionComponent : IComponent
     public Vector3 Position;
 }
 
-[Core]
+[View]
 public class WorldPositionComponent : IComponent
 {
     public Vector3 Position;
@@ -20,8 +20,18 @@ public class TileComponent : IComponent
     public string Description;
 }
 
+[View]
+public class TileViewComponent : IComponent
+{
+    public TileView View;
+}
+
+[Core, SingleEntity]
+public class SelectedComponent : IComponent { }
+
 [Core, SingleEntity]
 public class MapComponent : IComponent
 {
     public PositionIndex Map;
 }
+

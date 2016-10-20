@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using System.Collections;
 
 public class TileRaycaster : MonoBehaviour {
 
@@ -15,7 +14,7 @@ public class TileRaycaster : MonoBehaviour {
             {
                 if (hit.transform)
                 {
-                    hit.collider.GetComponent<ISelectedHandler>().OnSelected();
+                    hit.collider.GetComponent<ISelectable>().Select();
                 }
             }
         }

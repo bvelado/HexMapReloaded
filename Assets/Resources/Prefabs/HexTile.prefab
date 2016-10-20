@@ -22,7 +22,6 @@ GameObject:
   - 33: {fileID: 33000013066976706}
   - 23: {fileID: 23000011963306658}
   - 95: {fileID: 95000012071529974}
-  - 114: {fileID: 114000012000157500}
   - 64: {fileID: 64000012529848926}
   m_Layer: 8
   m_Name: HexTile
@@ -109,14 +108,3 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
---- !u!114 &114000012000157500
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1000011945342004}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6dd93b41092ed6143a5401f5f5658529, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 

@@ -12,37 +12,37 @@ namespace Entitas {
 
     public partial class Entity {
 
-        public WorldPositionComponent worldPosition { get { return (WorldPositionComponent)GetComponent(CoreComponentIds.WorldPosition); } }
-        public bool hasWorldPosition { get { return HasComponent(CoreComponentIds.WorldPosition); } }
+        public WorldPositionComponent worldPosition { get { return (WorldPositionComponent)GetComponent(ViewComponentIds.WorldPosition); } }
+        public bool hasWorldPosition { get { return HasComponent(ViewComponentIds.WorldPosition); } }
 
         public Entity AddWorldPosition(UnityEngine.Vector3 newPosition) {
-            var component = CreateComponent<WorldPositionComponent>(CoreComponentIds.WorldPosition);
+            var component = CreateComponent<WorldPositionComponent>(ViewComponentIds.WorldPosition);
             component.Position = newPosition;
-            return AddComponent(CoreComponentIds.WorldPosition, component);
+            return AddComponent(ViewComponentIds.WorldPosition, component);
         }
 
         public Entity ReplaceWorldPosition(UnityEngine.Vector3 newPosition) {
-            var component = CreateComponent<WorldPositionComponent>(CoreComponentIds.WorldPosition);
+            var component = CreateComponent<WorldPositionComponent>(ViewComponentIds.WorldPosition);
             component.Position = newPosition;
-            ReplaceComponent(CoreComponentIds.WorldPosition, component);
+            ReplaceComponent(ViewComponentIds.WorldPosition, component);
             return this;
         }
 
         public Entity RemoveWorldPosition() {
-            return RemoveComponent(CoreComponentIds.WorldPosition);
+            return RemoveComponent(ViewComponentIds.WorldPosition);
         }
     }
 }
 
-    public partial class CoreMatcher {
+    public partial class ViewMatcher {
 
         static IMatcher _matcherWorldPosition;
 
         public static IMatcher WorldPosition {
             get {
                 if(_matcherWorldPosition == null) {
-                    var matcher = (Matcher)Matcher.AllOf(CoreComponentIds.WorldPosition);
-                    matcher.componentNames = CoreComponentIds.componentNames;
+                    var matcher = (Matcher)Matcher.AllOf(ViewComponentIds.WorldPosition);
+                    matcher.componentNames = ViewComponentIds.componentNames;
                     _matcherWorldPosition = matcher;
                 }
 
