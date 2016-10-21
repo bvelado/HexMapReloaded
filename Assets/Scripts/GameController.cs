@@ -33,8 +33,11 @@ public class GameController : MonoBehaviour
         // Map
         .Add(pools.core.CreateSystem(new GenerateMapSystem()))
         .Add(pools.core.CreateSystem(new AddTileViewSystem()))
+        .Add(pools.core.CreateSystem(new GenerateCharactersSystem()))
+        .Add(pools.core.CreateSystem(new AddCharacterViewSystem()))
 
         // View
-        .Add(pools.core.CreateSystem(new NotifySelectedListeners()));
+        .Add(pools.core.CreateSystem(new NotifySelectedListeners(pools.uI)))
+        .Add(pools.core.CreateSystem(new NotifySelectedListeners(pools.view)));
     }
 }

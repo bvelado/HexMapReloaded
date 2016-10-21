@@ -8,11 +8,15 @@
 //------------------------------------------------------------------------------
 public static class UIComponentIds {
 
-    public const int TotalComponents = 0;
+    public const int SelectedListener = 0;
+
+    public const int TotalComponents = 1;
 
     public static readonly string[] componentNames = {
+        "SelectedListener"
     };
 
     public static readonly System.Type[] componentTypes = {
+        typeof(SelectedListenerComponent)
     };
 }

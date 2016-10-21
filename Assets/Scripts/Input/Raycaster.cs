@@ -1,8 +1,8 @@
 ﻿using UnityEngine;
 
-public class TileRaycaster : MonoBehaviour {
+public class Raycaster : MonoBehaviour {
 
-    public LayerMask TileLayer;
+    public LayerMask Layer;
 
     private RaycastHit hit;
 
@@ -10,7 +10,7 @@ public class TileRaycaster : MonoBehaviour {
 
         if (Input.GetMouseButtonDown(0))
         {
-            if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hit, 100f, TileLayer.value))
+            if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hit, 100f, Layer.value))
             {
                 if (hit.transform)
                 {

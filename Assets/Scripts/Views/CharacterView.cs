@@ -1,9 +1,10 @@
 ﻿using UnityEngine;
+using System.Collections;
 using Entitas;
 using System;
 
-public class TileView : MonoBehaviour, ISelectable, ISelectedListener {
-
+public class CharacterView : MonoBehaviour, ISelectable, ISelectedListener
+{
     private Vector3 _mapPosition;
     public Vector3 WorldPosition
     {
@@ -12,32 +13,33 @@ public class TileView : MonoBehaviour, ISelectable, ISelectedListener {
             return MapUtilities.MapToWorldPosition(_mapPosition);
         }
     }
-    
+
     public void Initialize(Vector3 MapPosition)
     {
         _mapPosition = MapPosition;
     }
 
-    public Entity GetEntity()
-    {
-        return Pools.sharedInstance.core.map.Map.FindEntityAtMapPosition(_mapPosition);
-    }
-
     public void Select()
     {
-        if(Pools.sharedInstance.core.isSelected)
+        if (Pools.sharedInstance.core.isSelected)
             Pools.sharedInstance.core.selectedEntity.IsSelected(false);
         GetEntity().IsSelected(true);
     }
 
+    public Entity GetEntity()
+    {
+        return Pools.sharedInstance.core.characters.Characters.FindEntityAtMapPosition(_mapPosition);
+    }
+
     public void SelectedChanged(Entity selectedEntity)
     {
-        if(selectedEntity != GetEntity())
+        if (selectedEntity != GetEntity())
         {
-            GetComponent<MeshRenderer>().material.color = Color.white;
-        } else
+            GetComponent<MeshRenderer>().material.color = Color.gray;
+        }
+        else
         {
-            GetComponent<MeshRenderer>().material.color = Color.yellow;
+            GetComponent<MeshRenderer>().material.color = Color.blue;
         }
     }
 }

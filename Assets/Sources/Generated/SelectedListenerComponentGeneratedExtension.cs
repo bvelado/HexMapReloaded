@@ -12,27 +12,44 @@ namespace Entitas {
 
     public partial class Entity {
 
-        public SelectedListenerComponent selectedListener { get { return (SelectedListenerComponent)GetComponent(ViewComponentIds.SelectedListener); } }
-        public bool hasSelectedListener { get { return HasComponent(ViewComponentIds.SelectedListener); } }
+        public SelectedListenerComponent selectedListener { get { return (SelectedListenerComponent)GetComponent(UIComponentIds.SelectedListener); } }
+        public bool hasSelectedListener { get { return HasComponent(UIComponentIds.SelectedListener); } }
 
         public Entity AddSelectedListener(ISelectedListener newListener) {
-            var component = CreateComponent<SelectedListenerComponent>(ViewComponentIds.SelectedListener);
+            var component = CreateComponent<SelectedListenerComponent>(UIComponentIds.SelectedListener);
             component.Listener = newListener;
-            return AddComponent(ViewComponentIds.SelectedListener, component);
+            return AddComponent(UIComponentIds.SelectedListener, component);
         }
 
         public Entity ReplaceSelectedListener(ISelectedListener newListener) {
-            var component = CreateComponent<SelectedListenerComponent>(ViewComponentIds.SelectedListener);
+            var component = CreateComponent<SelectedListenerComponent>(UIComponentIds.SelectedListener);
             component.Listener = newListener;
-            ReplaceComponent(ViewComponentIds.SelectedListener, component);
+            ReplaceComponent(UIComponentIds.SelectedListener, component);
             return this;
         }
 
         public Entity RemoveSelectedListener() {
-            return RemoveComponent(ViewComponentIds.SelectedListener);
+            return RemoveComponent(UIComponentIds.SelectedListener);
         }
     }
 }
+
+    public partial class UIMatcher {
+
+        static IMatcher _matcherSelectedListener;
+
+        public static IMatcher SelectedListener {
+            get {
+                if(_matcherSelectedListener == null) {
+                    var matcher = (Matcher)Matcher.AllOf(UIComponentIds.SelectedListener);
+                    matcher.componentNames = UIComponentIds.componentNames;
+                    _matcherSelectedListener = matcher;
+                }
+
+                return _matcherSelectedListener;
+            }
+        }
+    }
 
     public partial class ViewMatcher {
 

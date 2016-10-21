@@ -8,14 +8,18 @@
 //------------------------------------------------------------------------------
 public static class CoreComponentIds {
 
-    public const int Map = 0;
-    public const int MapPosition = 1;
-    public const int Selected = 2;
-    public const int Tile = 3;
+    public const int Character = 0;
+    public const int Characters = 1;
+    public const int Map = 2;
+    public const int MapPosition = 3;
+    public const int Selected = 4;
+    public const int Tile = 5;
 
-    public const int TotalComponents = 4;
+    public const int TotalComponents = 6;
 
     public static readonly string[] componentNames = {
+        "Character",
+        "Characters",
         "Map",
         "MapPosition",
         "Selected",
@@ -23,6 +27,8 @@ public static class CoreComponentIds {
     };
 
     public static readonly System.Type[] componentTypes = {
+        typeof(CharacterComponent),
+        typeof(CharactersComponent),
         typeof(MapComponent),
         typeof(MapPositionComponent),
         typeof(SelectedComponent),

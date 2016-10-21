@@ -1,0 +1,52 @@
+﻿using UnityEngine;
+using System.Collections;
+using UnityEngine.UI;
+using Entitas;
+
+public class CharacterInfoPanelView : MonoBehaviour, ISelectedListener
+{
+    public Text Name;
+    public Text Position;
+
+    public void SelectedChanged(Entity selectedEntity)
+    {
+        if (selectedEntity.hasCharacter)
+        {
+            Display();
+            Fill(selectedEntity);
+        }
+        else
+        {
+            Clear();
+            Hide();
+        }
+    }
+
+    void Start()
+    {
+        Pools.sharedInstance.uI.CreateEntity().AddSelectedListener(this);
+        Hide();
+    }
+
+    void Fill(Entity e)
+    {
+        Position.text = "Position : " + e.mapPosition.Position.x + " , " + e.mapPosition.Position.y + " , " + e.mapPosition.Position.z;
+        Name.text = "Name : " + e.character.Name;
+    }
+
+    void Clear()
+    {
+        Position.text = "Position : ";
+        Name.text = "Name : ";
+    }
+
+    void Hide()
+    {
+        gameObject.SetActive(false);
+    }
+
+    void Display()
+    {
+        gameObject.SetActive(true);
+    }
+}

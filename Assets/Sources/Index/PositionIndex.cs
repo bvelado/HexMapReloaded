@@ -37,8 +37,6 @@ public class PositionIndex
 
     protected virtual void AddEntity(Group collection, Entity entity, int index, IComponent component)
     {
-        Debug.Log("Added " + entity + " to lookup. Current count : " + lookup.Count);
-
         MapPositionComponent mapPositionComponent = null;
         
         foreach(var c in entity.GetComponents())

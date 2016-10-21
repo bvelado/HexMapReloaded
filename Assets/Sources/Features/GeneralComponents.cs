@@ -6,7 +6,7 @@ public interface ISelectedListener
     void SelectedChanged(Entity selectedEntity);
 }
 
-[View]
+[View, UI]
 public class SelectedListenerComponent : IComponent
 {
     public ISelectedListener Listener;

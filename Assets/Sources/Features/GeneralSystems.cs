@@ -2,9 +2,14 @@
 using System.Collections.Generic;
 using Entitas;
 
-public class NotifySelectedListeners : IReactiveSystem, ISetPool
+public class NotifySelectedListeners : IReactiveSystem
 {
     Group selectedListeners;
+
+    public NotifySelectedListeners(Pool observedPool)
+    {
+        selectedListeners = observedPool.GetGroup(Matcher.AnyOf(ViewMatcher.SelectedListener, UIMatcher.SelectedListener));
+    }
 
     public TriggerOnEvent trigger
     {
@@ -23,10 +28,5 @@ public class NotifySelectedListeners : IReactiveSystem, ISetPool
                 l.selectedListener.Listener.SelectedChanged(e);
             }
         }
-    }
-
-    public void SetPool(Pool pool)
-    {
-        selectedListeners = Pools.sharedInstance.view.GetGroup(Matcher.AllOf(ViewMatcher.SelectedListener));
     }
 }
