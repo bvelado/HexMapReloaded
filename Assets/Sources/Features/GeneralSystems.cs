@@ -15,7 +15,7 @@ public class NotifySelectedListeners : IReactiveSystem
     {
         get
         {
-            return Matcher.AllOf(CoreMatcher.Selected).OnEntityAdded();
+            return Matcher.AllOf(CoreMatcher.Selected).OnEntityAddedOrRemoved();
         }
     }
 

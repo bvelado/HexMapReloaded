@@ -32,7 +32,9 @@ public class PositionIndex
 
     public Entity FindEntityAtMapPosition(Vector3 mapPosition)
     {
-        return lookup[mapPosition];
+        if(lookup.ContainsKey(mapPosition))
+            return lookup[mapPosition];
+        return null;
     }
 
     protected virtual void AddEntity(Group collection, Entity entity, int index, IComponent component)

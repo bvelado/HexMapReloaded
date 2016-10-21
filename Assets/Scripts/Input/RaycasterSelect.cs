@@ -1,6 +1,7 @@
-﻿using UnityEngine;
+﻿using Entitas;
+using UnityEngine;
 
-public class Raycaster : MonoBehaviour {
+public class RaycasterSelect : MonoBehaviour {
 
     public LayerMask Layer;
 
@@ -15,6 +16,9 @@ public class Raycaster : MonoBehaviour {
                 if (hit.transform)
                 {
                     hit.collider.GetComponent<ISelectable>().Select();
+                } else
+                {
+                    Pools.sharedInstance.core.selectedEntity.IsSelected(false);
                 }
             }
         }
