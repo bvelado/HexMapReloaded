@@ -12,10 +12,13 @@ public class TileView : MonoBehaviour, ISelectable, ISelectedListener {
             return MapUtilities.MapToWorldPosition(_mapPosition);
         }
     }
-    
+
+    private Color _baseColor;
+
     public void Initialize(Vector3 MapPosition)
     {
         _mapPosition = MapPosition;
+        _baseColor = GetComponent<MeshRenderer>().material.color;
     }
 
     public Entity GetEntity()
@@ -34,7 +37,7 @@ public class TileView : MonoBehaviour, ISelectable, ISelectedListener {
     {
         if(selectedEntity != GetEntity())
         {
-            GetComponent<MeshRenderer>().material.color = Color.white;
+            GetComponent<MeshRenderer>().material.color = _baseColor;
         } else
         {
             GetComponent<MeshRenderer>().material.color = Color.yellow;

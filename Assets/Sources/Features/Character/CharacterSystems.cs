@@ -21,16 +21,17 @@ public class GenerateCharactersSystem : IInitializeSystem
 
         while(characters.Count > 0)
         {
-            var characterEntity = Pools.sharedInstance.core.CreateEntity()
+            Pools.sharedInstance.core.CreateEntity()
                 .AddCharacter(characters.Pop())
                 .AddMapPosition(tileEntities.GetEntities()[UnityEngine.Random.Range(0, tileEntities.count)].mapPosition.Position);
         }
-
     }
 }
 
 public class AddCharacterViewSystem : IReactiveSystem
 {
+    public static GameObject _charactersContainer = new GameObject("Characters container");
+
     public TriggerOnEvent trigger
     {
         get
@@ -45,7 +46,7 @@ public class AddCharacterViewSystem : IReactiveSystem
         {
             var e = Pools.sharedInstance.view.CreateEntity();
             e.AddWorldPosition(MapUtilities.MapToWorldPosition(entity.mapPosition.Position));
-            GameObject characterGO = GameObject.Instantiate(Resources.Load("Prefabs/Character"), e.worldPosition.Position + (Vector3.back*0.25f), Quaternion.identity) as GameObject;
+            GameObject characterGO = GameObject.Instantiate(Resources.Load("Prefabs/Character"), e.worldPosition.Position + (Vector3.back*0.25f), Quaternion.identity, _charactersContainer.transform) as GameObject;
             characterGO.name = entity.character.Name;
             var characterView = characterGO.AddComponent<CharacterView>();
             if (characterView)

@@ -14,9 +14,12 @@ public class CharacterView : MonoBehaviour, ISelectable, ISelectedListener
         }
     }
 
+    private Color _baseColor;
+
     public void Initialize(Vector3 MapPosition)
     {
         _mapPosition = MapPosition;
+        _baseColor = GetComponent<MeshRenderer>().material.color;
     }
 
     public void Select()
@@ -33,11 +36,9 @@ public class CharacterView : MonoBehaviour, ISelectable, ISelectedListener
 
     public void SelectedChanged(Entity selectedEntity)
     {
-        print(Pools.sharedInstance.core.characters.Characters.FindEntityAtMapPosition(_mapPosition));
-
         if (selectedEntity != GetEntity())
         {
-            GetComponent<MeshRenderer>().material.color = Color.gray;
+            GetComponent<MeshRenderer>().material.color = _baseColor;
         }
         else
         {
