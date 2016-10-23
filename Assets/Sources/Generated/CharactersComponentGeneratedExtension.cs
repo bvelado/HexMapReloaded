@@ -15,15 +15,17 @@ namespace Entitas {
         public CharactersComponent characters { get { return (CharactersComponent)GetComponent(CoreComponentIds.Characters); } }
         public bool hasCharacters { get { return HasComponent(CoreComponentIds.Characters); } }
 
-        public Entity AddCharacters(PositionIndex newCharacters) {
+        public Entity AddCharacters(IdIndex newCharactersByID, PositionIndex newCharactersByPosition) {
             var component = CreateComponent<CharactersComponent>(CoreComponentIds.Characters);
-            component.Characters = newCharacters;
+            component.CharactersByID = newCharactersByID;
+            component.CharactersByPosition = newCharactersByPosition;
             return AddComponent(CoreComponentIds.Characters, component);
         }
 
-        public Entity ReplaceCharacters(PositionIndex newCharacters) {
+        public Entity ReplaceCharacters(IdIndex newCharactersByID, PositionIndex newCharactersByPosition) {
             var component = CreateComponent<CharactersComponent>(CoreComponentIds.Characters);
-            component.Characters = newCharacters;
+            component.CharactersByID = newCharactersByID;
+            component.CharactersByPosition = newCharactersByPosition;
             ReplaceComponent(CoreComponentIds.Characters, component);
             return this;
         }
@@ -39,22 +41,22 @@ namespace Entitas {
         public CharactersComponent characters { get { return charactersEntity.characters; } }
         public bool hasCharacters { get { return charactersEntity != null; } }
 
-        public Entity SetCharacters(PositionIndex newCharacters) {
+        public Entity SetCharacters(IdIndex newCharactersByID, PositionIndex newCharactersByPosition) {
             if(hasCharacters) {
                 throw new EntitasException("Could not set characters!\n" + this + " already has an entity with CharactersComponent!",
                     "You should check if the pool already has a charactersEntity before setting it or use pool.ReplaceCharacters().");
             }
             var entity = CreateEntity();
-            entity.AddCharacters(newCharacters);
+            entity.AddCharacters(newCharactersByID, newCharactersByPosition);
             return entity;
         }
 
-        public Entity ReplaceCharacters(PositionIndex newCharacters) {
+        public Entity ReplaceCharacters(IdIndex newCharactersByID, PositionIndex newCharactersByPosition) {
             var entity = charactersEntity;
             if(entity == null) {
-                entity = SetCharacters(newCharacters);
+                entity = SetCharacters(newCharactersByID, newCharactersByPosition);
             } else {
-                entity.ReplaceCharacters(newCharacters);
+                entity.ReplaceCharacters(newCharactersByID, newCharactersByPosition);
             }
 
             return entity;

@@ -16,5 +16,6 @@ public class CharacterViewComponent : IComponent
 [Core, SingleEntity]
 public class CharactersComponent : IComponent
 {
-    public PositionIndex Characters;
+    public IdIndex CharactersByID;
+    public PositionIndex CharactersByPosition;
 }

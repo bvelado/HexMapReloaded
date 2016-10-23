@@ -13,13 +13,19 @@ public class CharacterView : MonoBehaviour, ISelectable, ISelectedListener
             return MapUtilities.MapToWorldPosition(_mapPosition);
         }
     }
+    private int _id;
+    public int ID
+    {
+        get { return _id; }
+    }
 
     private Color _baseColor;
 
-    public void Initialize(Vector3 MapPosition)
+    public void Initialize(Vector3 MapPosition, int id)
     {
         _mapPosition = MapPosition;
         _baseColor = GetComponent<MeshRenderer>().material.color;
+        _id = id;
     }
 
     public void Select()
@@ -30,8 +36,8 @@ public class CharacterView : MonoBehaviour, ISelectable, ISelectedListener
     }
 
     public Entity GetEntity()
-    {   
-        return Pools.sharedInstance.core.characters.Characters.FindEntityAtMapPosition(_mapPosition);
+    {
+        return Pools.sharedInstance.core.characters.CharactersByID.FindEntityAtIndex(ID);
     }
 
     public void SelectedChanged(Entity selectedEntity)

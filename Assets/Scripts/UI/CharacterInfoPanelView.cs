@@ -14,9 +14,11 @@ public class CharacterInfoPanelView : MonoBehaviour, ISelectedListener
         {
             Display();
             Fill(selectedEntity);
-        } else if (selectedEntity != null && selectedEntity.hasTile && Pools.sharedInstance.core.characters.Characters.FindEntityAtMapPosition(selectedEntity.mapPosition.Position) != null){
+        }
+        else if (selectedEntity != null && selectedEntity.hasTile && Pools.sharedInstance.core.characters.CharactersByPosition.FindEntityAtMapPosition(selectedEntity.mapPosition.Position) != null)
+        {
             Display();
-            Fill(Pools.sharedInstance.core.characters.Characters.FindEntityAtMapPosition(selectedEntity.mapPosition.Position));
+            Fill(Pools.sharedInstance.core.characters.CharactersByPosition.FindEntityAtMapPosition(selectedEntity.mapPosition.Position));
         } else
         {
             Clear();

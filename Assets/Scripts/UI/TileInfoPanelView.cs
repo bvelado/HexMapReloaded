@@ -31,10 +31,11 @@ public class TileInfoPanelView : MonoBehaviour, ISelectedListener {
     {
         Position.text = "Position : " + e.mapPosition.Position.x + " , " + e.mapPosition.Position.y + " , " + e.mapPosition.Position.z;
 
-        if (Pools.sharedInstance.core.characters.Characters.FindEntityAtMapPosition(e.mapPosition.Position) != null)
+        if (Pools.sharedInstance.core.characters.CharactersByPosition.FindEntityAtMapPosition(e.mapPosition.Position) != null)
         {
-            Occupied.text = Pools.sharedInstance.core.characters.Characters.FindEntityAtMapPosition(e.mapPosition.Position).character.Name;
-        } else
+            Occupied.text = Pools.sharedInstance.core.characters.CharactersByPosition.FindEntityAtMapPosition(e.mapPosition.Position).character.Name;
+        }
+        else
         {
             Occupied.text = " Empty";
         }
