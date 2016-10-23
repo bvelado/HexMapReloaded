@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using Entitas;
+using UnityEngine;
 
-public class NotifySelectedListeners : IReactiveSystem
+public class NotifySelectedListeners : IMultiReactiveSystem
 {
     Group selectedListeners;
 
@@ -15,18 +16,45 @@ public class NotifySelectedListeners : IReactiveSystem
     {
         get
         {
-            return Matcher.AllOf(CoreMatcher.Selected).OnEntityAddedOrRemoved();
+            return Matcher.AllOf(CoreMatcher.Selected).OnEntityAdded();
+        }
+    }
+
+    public TriggerOnEvent[] triggers
+    {
+        get
+        {
+            return new []
+            {
+               Matcher.AllOf(CoreMatcher.Selected).OnEntityAdded(),
+               Matcher.AllOf(CoreMatcher.Selected).OnEntityRemoved()
+            };
         }
     }
 
     public void Execute(List<Entity> entities)
     {
-        foreach(var e in entities)
+        foreach(var l in selectedListeners.GetEntities())
         {
-            foreach (var l in selectedListeners.GetEntities())
-            {
-                l.selectedListener.Listener.SelectedChanged(e);
-            }
+            l.selectedListener.Listener.SelectedChanged(Pools.sharedInstance.core.selectedEntity);
         }
+
+        //Debug.Log(entities.Count);
+        //if(entities.Count > 0)
+        //{
+        //    foreach (var e in entities)
+        //    {
+        //        foreach (var l in selectedListeners.GetEntities())
+        //        {
+        //            l.selectedListener.Listener.SelectedChanged(e);
+        //        }
+        //    }
+        //} else {
+        //    foreach (var l in selectedListeners.GetEntities())
+        //    {
+        //        Debug.Log("Pas de selectedEntity");
+        //        l.selectedListener.Listener.SelectedChanged(null);
+        //    }
+        //}
     }
 }

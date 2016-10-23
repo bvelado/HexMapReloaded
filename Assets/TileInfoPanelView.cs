@@ -11,7 +11,7 @@ public class TileInfoPanelView : MonoBehaviour, ISelectedListener {
 
     public void SelectedChanged(Entity selectedEntity)
     {
-        if(selectedEntity.hasTile || selectedEntity.hasCharacter)
+        if(selectedEntity != null && (selectedEntity.hasTile || selectedEntity.hasCharacter))
         {
             Display();
             Fill(selectedEntity);

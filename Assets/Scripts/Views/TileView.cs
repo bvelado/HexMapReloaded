@@ -35,7 +35,7 @@ public class TileView : MonoBehaviour, ISelectable, ISelectedListener {
 
     public void SelectedChanged(Entity selectedEntity)
     {
-        if(selectedEntity != GetEntity())
+        if(selectedEntity == null || selectedEntity != GetEntity())
         {
             GetComponent<MeshRenderer>().material.color = _baseColor;
         } else

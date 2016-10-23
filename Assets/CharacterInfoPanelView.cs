@@ -10,11 +10,11 @@ public class CharacterInfoPanelView : MonoBehaviour, ISelectedListener
 
     public void SelectedChanged(Entity selectedEntity)
     {
-        if (selectedEntity.hasCharacter)
+        if (selectedEntity != null && selectedEntity.hasCharacter)
         {
             Display();
             Fill(selectedEntity);
-        } else if (selectedEntity.hasTile && Pools.sharedInstance.core.characters.Characters.FindEntityAtMapPosition(selectedEntity.mapPosition.Position) != null){
+        } else if (selectedEntity != null && selectedEntity.hasTile && Pools.sharedInstance.core.characters.Characters.FindEntityAtMapPosition(selectedEntity.mapPosition.Position) != null){
             Display();
             Fill(Pools.sharedInstance.core.characters.Characters.FindEntityAtMapPosition(selectedEntity.mapPosition.Position));
         } else

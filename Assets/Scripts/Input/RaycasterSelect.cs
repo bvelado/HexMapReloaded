@@ -16,10 +16,11 @@ public class RaycasterSelect : MonoBehaviour {
                 if (hit.transform)
                 {
                     hit.collider.GetComponent<ISelectable>().Select();
-                } else
-                {
-                    Pools.sharedInstance.core.selectedEntity.IsSelected(false);
                 }
+            } else
+            {
+                if(Pools.sharedInstance.core.isSelected)
+                    Pools.sharedInstance.core.selectedEntity.IsSelected(false);
             }
         }
         
