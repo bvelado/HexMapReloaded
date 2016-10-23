@@ -27,12 +27,14 @@ public class CharacterView : MonoBehaviour, ISelectable, ISelectedListener
     }
 
     public Entity GetEntity()
-    {
+    {   
         return Pools.sharedInstance.core.characters.Characters.FindEntityAtMapPosition(_mapPosition);
     }
 
     public void SelectedChanged(Entity selectedEntity)
     {
+        print(Pools.sharedInstance.core.characters.Characters.FindEntityAtMapPosition(_mapPosition));
+
         if (selectedEntity != GetEntity())
         {
             GetComponent<MeshRenderer>().material.color = Color.gray;

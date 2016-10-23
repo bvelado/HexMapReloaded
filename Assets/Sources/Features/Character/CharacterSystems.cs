@@ -52,7 +52,7 @@ public class AddCharacterViewSystem : IReactiveSystem
             {
                 characterView.Initialize(entity.mapPosition.Position);
                 e.AddCharacterView(characterView);
-                //e.AddSelectedListener(characterView);
+                e.AddSelectedListener(characterView);
             }
         }
     }
