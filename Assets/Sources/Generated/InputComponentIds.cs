@@ -6,29 +6,20 @@
 //     the code is regenerated.
 // </auto-generated>
 //------------------------------------------------------------------------------
-public static class ViewComponentIds {
+public static class InputComponentIds {
 
     public const int Destroy = 0;
-    public const int SelectedListener = 1;
-    public const int CharacterView = 2;
-    public const int TileView = 3;
-    public const int WorldPosition = 4;
+    public const int Input = 1;
 
-    public const int TotalComponents = 5;
+    public const int TotalComponents = 2;
 
     public static readonly string[] componentNames = {
         "Destroy",
-        "SelectedListener",
-        "CharacterView",
-        "TileView",
-        "WorldPosition"
+        "Input"
     };
 
     public static readonly System.Type[] componentTypes = {
         typeof(DestroyComponent),
-        typeof(SelectedListenerComponent),
-        typeof(CharacterViewComponent),
-        typeof(TileViewComponent),
-        typeof(WorldPositionComponent)
+        typeof(InputComponent)
     };
 }

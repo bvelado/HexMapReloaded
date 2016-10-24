@@ -38,6 +38,8 @@ public class GameController : MonoBehaviour
 
         // View
         .Add(pools.core.CreateSystem(new NotifySelectedListeners(pools.uI)))
-        .Add(pools.core.CreateSystem(new NotifySelectedListeners(pools.view)));
+        .Add(pools.core.CreateSystem(new NotifySelectedListeners(pools.view)))
+        
+        .Add(pools.input.CreateSystem(new EndTurnSystem()));
     }
 }

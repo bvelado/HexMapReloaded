@@ -17,3 +17,6 @@ public class IdComponent : IComponent
 {
     public int Id;
 }
+
+[Core, UI, View, Input]
+public class DestroyComponent : IComponent { }

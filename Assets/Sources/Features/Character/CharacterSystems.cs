@@ -28,7 +28,9 @@ public class GenerateCharactersSystem : IInitializeSystem
             Pools.sharedInstance.core.CreateEntity()
                 .AddCharacter(characters.Pop())
                 .AddMapPosition(tileEntities.GetEntities()[UnityEngine.Random.Range(0, tileEntities.count)].mapPosition.Position)
-                .AddId(i);
+                .AddId(i)
+                .AddTurnOrder(i)
+                .IsControllable(i==0? true : false);
 
             ++i;
         }
