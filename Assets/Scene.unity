@@ -526,7 +526,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Name: {fileID: 544822446}
   Position: {fileID: 1520091408}
-  ActionsPanel: {fileID: 0}
+  ActionsPanel: {fileID: 1372701560}
 --- !u!114 &1146502279
 MonoBehaviour:
   m_ObjectHideFlags: 0
