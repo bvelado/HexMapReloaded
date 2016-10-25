@@ -19,3 +19,14 @@ public class CharactersComponent : IComponent
     public IdIndex CharactersByID;
     public PositionIndex CharactersByPosition;
 }
+
+public interface IControlledListener
+{
+    void ControlledChanged(Entity controlledEntity);
+}
+
+[Core, View, UI]
+public class ControlledListenerComponent : IComponent
+{
+    public IControlledListener Listener;
+}

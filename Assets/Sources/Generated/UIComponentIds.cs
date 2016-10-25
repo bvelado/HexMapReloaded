@@ -9,17 +9,20 @@
 public static class UIComponentIds {
 
     public const int Destroy = 0;
-    public const int SelectedListener = 1;
+    public const int ControlledListener = 1;
+    public const int SelectedListener = 2;
 
-    public const int TotalComponents = 2;
+    public const int TotalComponents = 3;
 
     public static readonly string[] componentNames = {
         "Destroy",
+        "ControlledListener",
         "SelectedListener"
     };
 
     public static readonly System.Type[] componentTypes = {
         typeof(DestroyComponent),
+        typeof(ControlledListenerComponent),
         typeof(SelectedListenerComponent)
     };
 }

@@ -61,8 +61,9 @@ public class AddCharacterViewSystem : IReactiveSystem
             if (characterView)
             {
                 characterView.Initialize(entity.mapPosition.Position, entity.id.Id);
-                e.AddCharacterView(characterView);
-                e.AddSelectedListener(characterView);
+                e.AddCharacterView(characterView)
+                .AddSelectedListener(characterView)
+                .AddControlledListener(characterView);
             }
         }
     }

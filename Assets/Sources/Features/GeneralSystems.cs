@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using Entitas;
 using UnityEngine;
 
-public class NotifySelectedListeners : IMultiReactiveSystem
+public class NotifySelectedListenersSystem : IMultiReactiveSystem
 {
     Group selectedListeners;
 
-    public NotifySelectedListeners(Pool observedPool)
+    public NotifySelectedListenersSystem(Pool observedPool)
     {
         selectedListeners = observedPool.GetGroup(Matcher.AnyOf(ViewMatcher.SelectedListener, UIMatcher.SelectedListener));
     }

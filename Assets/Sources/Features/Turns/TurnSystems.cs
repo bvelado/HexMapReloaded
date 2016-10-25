@@ -60,3 +60,32 @@ public class EndTurnSystem : IReactiveSystem, ISetPool
         charactersWithTurnOrder = Pools.sharedInstance.core.GetGroup(Matcher.AllOf(CoreMatcher.Character, CoreMatcher.TurnOrder));
     }
 }
+
+public class NotifyControlledListenersSystem : IReactiveSystem
+{
+    Group controlledChangedListeners;
+
+    public NotifyControlledListenersSystem(Pool observedPool)
+    {
+        controlledChangedListeners = observedPool.GetGroup(Matcher.AnyOf(CoreMatcher.ControlledListener));
+    }
+
+    public TriggerOnEvent trigger
+    {
+        get
+        {
+            return Matcher.AllOf(CoreMatcher.Character, CoreMatcher.Controllable).OnEntityAdded();
+        }
+    }
+
+    public void Execute(List<Entity> entities)
+    {
+        foreach(var e in entities)
+        {
+            foreach(var l in controlledChangedListeners.GetEntities())
+            {
+                l.controlledListener.Listener.ControlledChanged(e);
+            }
+        }
+    }
+}
