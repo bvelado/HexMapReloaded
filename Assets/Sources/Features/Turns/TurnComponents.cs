@@ -1,15 +1,13 @@
-﻿using UnityEngine;
-using System.Collections;
+﻿using Entitas;
+using Entitas.CodeGenerator;
 
-public class TurnComponents : MonoBehaviour {
-
-	// Use this for initialization
-	void Start () {
-	
-	}
-	
-	// Update is called once per frame
-	void Update () {
-	
-	}
+[Core]
+public class TurnOrderComponent : IComponent {
+    public int OrderIndex;
 }
+
+/// <summary>
+/// When an entity is Character & Controllable, the player can control the character and have him execute actions
+/// </summary>
+[Core, SingleEntity]
+public class ControllableComponent : IComponent { }

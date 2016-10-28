@@ -28,7 +28,9 @@ public class GenerateCharactersSystem : IInitializeSystem
             Pools.sharedInstance.core.CreateEntity()
                 .AddCharacter(characters.Pop())
                 .AddMapPosition(tileEntities.GetEntities()[UnityEngine.Random.Range(0, tileEntities.count)].mapPosition.Position)
-                .AddId(i);
+                .AddId(i)
+                .AddTurnOrder(i)
+                .IsControllable(i==0? true : false);
 
             ++i;
         }
@@ -59,8 +61,9 @@ public class AddCharacterViewSystem : IReactiveSystem
             if (characterView)
             {
                 characterView.Initialize(entity.mapPosition.Position, entity.id.Id);
-                e.AddCharacterView(characterView);
-                e.AddSelectedListener(characterView);
+                e.AddCharacterView(characterView)
+                .AddSelectedListener(characterView)
+                .AddControlledListener(characterView);
             }
         }
     }

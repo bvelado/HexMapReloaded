@@ -3,7 +3,7 @@ using System.Collections;
 using Entitas;
 using System;
 
-public class CharacterView : MonoBehaviour, ISelectable, ISelectedListener
+public class CharacterView : MonoBehaviour, ISelectable, ISelectedListener, IControlledListener
 {
     private Vector3 _mapPosition;
     public Vector3 WorldPosition
@@ -42,13 +42,21 @@ public class CharacterView : MonoBehaviour, ISelectable, ISelectedListener
 
     public void SelectedChanged(Entity selectedEntity)
     {
-        if (selectedEntity == null || selectedEntity != GetEntity())
-        {
-            GetComponent<MeshRenderer>().material.color = _baseColor;
-        }
-        else
-        {
+        UpdateView();
+    }
+
+    public void ControlledChanged(Entity controlledEntity)
+    {
+        UpdateView();
+    }
+
+    public void UpdateView()
+    {
+        if (GetEntity().isControllable)
             GetComponent<MeshRenderer>().material.color = Color.blue;
-        }
+        else if(!GetEntity().isControllable && GetEntity().isSelected)
+            GetComponent<MeshRenderer>().material.color = Color.green;
+        else
+            GetComponent<MeshRenderer>().material.color = _baseColor;
     }
 }

@@ -1,6 +1,4 @@
-﻿using Entitas;
-
-public interface ISelectable
+﻿public interface ISelectable
 {
     void Select();
 }
