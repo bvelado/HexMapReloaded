@@ -9,28 +9,34 @@
 public static class ViewComponentIds {
 
     public const int Destroy = 0;
-    public const int ControlledListener = 1;
-    public const int SelectedListener = 2;
-    public const int CharacterView = 3;
-    public const int TileView = 4;
-    public const int WorldPosition = 5;
+    public const int ActionModeChangedListener = 1;
+    public const int ControlledListener = 2;
+    public const int SelectedListener = 3;
+    public const int CharacterView = 4;
+    public const int PathView = 5;
+    public const int TileView = 6;
+    public const int WorldPosition = 7;
 
-    public const int TotalComponents = 6;
+    public const int TotalComponents = 8;
 
     public static readonly string[] componentNames = {
         "Destroy",
+        "ActionModeChangedListener",
         "ControlledListener",
         "SelectedListener",
         "CharacterView",
+        "PathView",
         "TileView",
         "WorldPosition"
     };
 
     public static readonly System.Type[] componentTypes = {
         typeof(DestroyComponent),
+        typeof(ActionModeChangedListenerComponent),
         typeof(ControlledListenerComponent),
         typeof(SelectedListenerComponent),
         typeof(CharacterViewComponent),
+        typeof(PathViewComponent),
         typeof(TileViewComponent),
         typeof(WorldPositionComponent)
     };

@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
-public class RaycasterSelect : MonoBehaviour, IActionModeChangedListener {
+public class RaycasterMove : MonoBehaviour, IActionModeChangedListener {
 
     public EventSystem es;
     public LayerMask Layer;
@@ -19,7 +19,7 @@ public class RaycasterSelect : MonoBehaviour, IActionModeChangedListener {
 
     public void ActionModeChanged(ActionMode mode)
     {
-        enabled = (mode == ActionMode.Select);
+        enabled = (mode == ActionMode.Move);
     }
 
     void Update()

@@ -13,6 +13,8 @@ public class GameController : MonoBehaviour
 
         _systems = createSystems(pools);
         _systems.Initialize();
+
+        pools.parameters.CreateEntity().AddActionMode(ActionMode.Select);
     }
 
     void Update()
@@ -30,19 +32,31 @@ public class GameController : MonoBehaviour
     {
         return new Feature("Systems")
 
+        .Add(pools.input.CreateSystem(new HandleInputSystem()))
+
         // Map
         .Add(pools.core.CreateSystem(new GenerateMapSystem()))
         .Add(pools.core.CreateSystem(new AddTileViewSystem()))
         .Add(pools.core.CreateSystem(new GenerateCharactersSystem()))
         .Add(pools.core.CreateSystem(new AddCharacterViewSystem()))
 
-        // View
+        // Logic
+        .Add(pools.parameters.CreateSystem(new ResetSelectedOnActionModeChanged()))
+
+        // Core listeners
+        .Add(pools.core.CreateSystem(new NotifyControlledListenersSystem(pools.core)))
+
+        .Add(pools.parameters.CreateSystem(new NotifyActionModeChangedListenersSystem(pools.core)))
+
+        // UI & View listeners
         .Add(pools.core.CreateSystem(new NotifySelectedListenersSystem(pools.uI)))
         .Add(pools.core.CreateSystem(new NotifySelectedListenersSystem(pools.view)))
 
-        .Add(pools.core.CreateSystem(new NotifyControlledListenersSystem(pools.core)))
         .Add(pools.core.CreateSystem(new NotifyControlledListenersSystem(pools.uI)))
         .Add(pools.core.CreateSystem(new NotifyControlledListenersSystem(pools.view)))
+
+        .Add(pools.parameters.CreateSystem(new NotifyActionModeChangedListenersSystem(pools.uI)))
+        .Add(pools.parameters.CreateSystem(new NotifyActionModeChangedListenersSystem(pools.view)))
 
         .Add(pools.input.CreateSystem(new EndTurnSystem()));
     }

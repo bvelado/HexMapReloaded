@@ -58,3 +58,52 @@ public class NotifySelectedListenersSystem : IMultiReactiveSystem
         //}
     }
 }
+
+public class NotifyActionModeChangedListenersSystem : IReactiveSystem
+{
+    Group listeners;
+
+    public NotifyActionModeChangedListenersSystem(Pool pool)
+    {
+        listeners = pool.GetGroup(Matcher.AllOf(CoreMatcher.ActionModeChangedListener, ViewMatcher.ActionModeChangedListener, UIMatcher.ActionModeChangedListener));
+    }
+
+    public TriggerOnEvent trigger
+    {
+        get
+        {
+            return ParametersMatcher.ActionMode.OnEntityAdded();
+        }
+    }
+
+    public void Execute(List<Entity> entities)
+    {
+        foreach(var e in entities)
+        {
+            foreach(var l in listeners.GetEntities())
+            {
+                l.actionModeChangedListener.Listener.ActionModeChanged(e.actionMode.Mode);
+            }
+        }
+    }
+}
+
+public class ResetSelectedOnActionModeChanged : IReactiveSystem
+{
+    public TriggerOnEvent trigger
+    {
+        get
+        {
+            return ParametersMatcher.ActionMode.OnEntityAdded();
+        }
+    }
+
+    public void Execute(List<Entity> entities)
+    {
+        foreach (var e in entities)
+        {
+            if (Pools.sharedInstance.core.isSelected)
+                Pools.sharedInstance.core.selectedEntity.IsSelected(false);
+        }
+    }
+}

@@ -22,6 +22,10 @@ namespace Entitas {
             return CreatePool("Meta", MetaComponentIds.TotalComponents, MetaComponentIds.componentNames, MetaComponentIds.componentTypes);
         }
 
+        public static Pool CreateParametersPool() {
+            return CreatePool("Parameters", ParametersComponentIds.TotalComponents, ParametersComponentIds.componentNames, ParametersComponentIds.componentTypes);
+        }
+
         public static Pool CreateUIPool() {
             return CreatePool("UI", UIComponentIds.TotalComponents, UIComponentIds.componentNames, UIComponentIds.componentTypes);
         }
@@ -30,11 +34,12 @@ namespace Entitas {
             return CreatePool("View", ViewComponentIds.TotalComponents, ViewComponentIds.componentNames, ViewComponentIds.componentTypes);
         }
 
-        public Pool[] allPools { get { return new [] { core, input, meta, uI, view }; } }
+        public Pool[] allPools { get { return new [] { core, input, meta, parameters, uI, view }; } }
 
         public Pool core;
         public Pool input;
         public Pool meta;
+        public Pool parameters;
         public Pool uI;
         public Pool view;
 
@@ -42,6 +47,7 @@ namespace Entitas {
             core = CreateCorePool();
             input = CreateInputPool();
             meta = CreateMetaPool();
+            parameters = CreateParametersPool();
             uI = CreateUIPool();
             view = CreateViewPool();
         }
