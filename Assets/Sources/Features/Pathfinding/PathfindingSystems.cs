@@ -1,15 +1,19 @@
-﻿using UnityEngine;
-using System.Collections;
+﻿using System;
+using System.Collections.Generic;
+using Entitas;
 
-public class PathfindingSystems : MonoBehaviour {
+public class BuildPathSystem : IReactiveSystem
+{
+    public TriggerOnEvent trigger
+    {
+        get
+        {
+            throw new NotImplementedException();
+        }
+    }
 
-	// Use this for initialization
-	void Start () {
-	
-	}
-	
-	// Update is called once per frame
-	void Update () {
-	
-	}
+    public void Execute(List<Entity> entities)
+    {
+        
+    }
 }

@@ -28,9 +28,15 @@ public class RaycasterMove : MonoBehaviour, IActionModeChangedListener {
         {
             if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hit, Layer.value))
             {
-                if (hit.transform && hit.transform.GetComponent<ISelectable>() != null)
+                if (hit.transform && hit.transform.GetComponent<IWalkable>() != null && hit.collider.GetComponent<IWalkable>().IsWalkable())
                 {
-                    hit.collider.GetComponent<ISelectable>().Select();
+                    if (!Pools.sharedInstance.core.hasPath)
+                        Pools.sharedInstance.core.CreateEntity().AddPath(new Vector3[0]);
+
+                    if (TryAddTileToPath(hit.transform.GetComponent<IWalkable>().GetMapPosition()))
+                        print("Cool!");
+                    else
+                        print("Pas cool!");
                 }
             }
             else if(!es.IsPointerOverGameObject())
@@ -39,5 +45,30 @@ public class RaycasterMove : MonoBehaviour, IActionModeChangedListener {
                     Pools.sharedInstance.core.selectedEntity.IsSelected(false);
             }
         }
+    }
+
+    bool TryAddTileToPath(Vector3 MapPosition)
+    {
+        Vector3[] PathCopy = Pools.sharedInstance.core.path.MapPositions;
+
+        // Check if the last path tile exist and is neighbor
+        if(PathCopy.Length > 0)
+        {
+            Vector3 PathLastMapPosition = PathCopy[PathCopy.Length - 1];
+            if(!MapUtilities.IsNeighbor(MapPosition, PathLastMapPosition)) {
+                return false;
+            }
+        }
+
+        PathCopy = new Vector3[Pools.sharedInstance.core.path.MapPositions.Length +1];
+        for(int i = 0; i < Pools.sharedInstance.core.path.MapPositions.Length; i++)
+        {
+            PathCopy[i] = Pools.sharedInstance.core.path.MapPositions[i];
+        }
+        PathCopy[Pools.sharedInstance.core.path.MapPositions.Length] = MapPosition;
+
+        Pools.sharedInstance.core.ReplacePath(PathCopy);
+
+        return true;
     }
 }

@@ -173,5 +173,15 @@ public static class MapUtilities {
     {
         return Pools.sharedInstance.core.map.Map.FindEntityAtMapPosition(originPosition + GetDirection(direction));
     }
+
+    public static bool IsNeighbor(Entity tileA, Entity tileB)
+    {
+        return GetDistance(tileA, tileB) == 1;
+    }
+
+    public static bool IsNeighbor(Vector3 mapPositionA, Vector3 mapPositionB)
+    {
+        return GetDistance(mapPositionA, mapPositionB) == 1;
+    }
     #endregion
 }

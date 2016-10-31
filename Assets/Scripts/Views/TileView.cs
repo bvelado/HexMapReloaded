@@ -2,7 +2,7 @@
 using Entitas;
 using System;
 
-public class TileView : MonoBehaviour, ISelectable, ISelectedListener {
+public class TileView : MonoBehaviour, ISelectable, IWalkable, ISelectedListener {
 
     private Vector3 _mapPosition;
     public Vector3 WorldPosition
@@ -42,5 +42,16 @@ public class TileView : MonoBehaviour, ISelectable, ISelectedListener {
         {
             GetComponent<MeshRenderer>().material.color = Color.yellow;
         }
+    }
+
+    public bool IsWalkable()
+    {
+        // TODO : CHANGE IT 
+        return true;
+    }
+
+    public Vector3 GetMapPosition()
+    {
+        return _mapPosition;
     }
 }

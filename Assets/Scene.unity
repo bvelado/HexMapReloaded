@@ -1032,6 +1032,7 @@ GameObject:
   - 4: {fileID: 1633123415}
   - 114: {fileID: 1633123414}
   - 114: {fileID: 1633123416}
+  - 114: {fileID: 1633123417}
   m_Layer: 0
   m_Name: InputController
   m_TagString: Untagged
@@ -1078,6 +1079,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b0e69559054046844a21890b0fb3cd6d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1633123417
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1633123413}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0508ffd4953dbc64eb5770c70f203d2a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  es: {fileID: 2128398128}
+  Layer:
+    serializedVersion: 2
+    m_Bits: 288
 --- !u!1 &1665840053
 GameObject:
   m_ObjectHideFlags: 0
