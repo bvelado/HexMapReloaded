@@ -43,6 +43,9 @@ public class GameController : MonoBehaviour
         // Logic
         .Add(pools.parameters.CreateSystem(new ResetSelectedOnActionModeChanged()))
 
+        .Add(pools.parameters.CreateSystem(new ActivateSystemsOnActionMode(ActionMode.Move, new Feature("ActionModeMove Systems")
+            .Add(pools.core.CreateSystem(new HighlightPathSystem())))))
+
         // Core listeners
         .Add(pools.core.CreateSystem(new NotifyControlledListenersSystem(pools.core)))
 

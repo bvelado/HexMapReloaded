@@ -107,3 +107,28 @@ public class ResetSelectedOnActionModeChanged : IReactiveSystem
         }
     }
 }
+
+public class ActivateSystemsOnActionMode : IExecuteSystem
+{
+    bool execute;
+    ActionMode _mode;
+    Systems _systems;
+
+    public ActivateSystemsOnActionMode(ActionMode mode, Systems systems)
+    {
+        _mode = mode;
+        _systems = systems;
+
+        Pools.sharedInstance.parameters.GetGroup(ParametersMatcher.ActionMode);
+    }
+
+    public void Execute()
+    {
+        if (execute)
+        {
+            Debug.Log(_systems.ToString() + " executing");
+            _systems.Execute();
+            _systems.Cleanup();
+        }   
+    }
+}

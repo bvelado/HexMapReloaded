@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Entitas;
 using UnityEngine;
 
@@ -55,6 +56,29 @@ public class AddTileViewSystem : IReactiveSystem
                 e.AddTileView(tileView);
                 e.AddSelectedListener(tileView);
             }   
+        }
+    }
+}
+
+public class HighlightPathSystem : IReactiveSystem
+{
+    public TriggerOnEvent trigger
+    {
+        get
+        {
+            return CoreMatcher.Path.OnEntityAdded();
+        }
+    }
+
+    public void Execute(List<Entity> entities)
+    {
+        Debug.Log(Pools.sharedInstance.core.path.MapPositions.Length);
+        foreach(var e in entities)
+        {
+            foreach(var mapPosition in e.path.MapPositions)
+            {
+                Debug.Log(Pools.sharedInstance.core.map.Map.FindEntityAtMapPosition(mapPosition).hasTileView);
+            }
         }
     }
 }
