@@ -15,15 +15,17 @@ namespace Entitas {
         public MapComponent map { get { return (MapComponent)GetComponent(CoreComponentIds.Map); } }
         public bool hasMap { get { return HasComponent(CoreComponentIds.Map); } }
 
-        public Entity AddMap(PositionIndex newMap) {
+        public Entity AddMap(PositionIndex newTilesByMapPosition, IdIndex newTilesByIndex) {
             var component = CreateComponent<MapComponent>(CoreComponentIds.Map);
-            component.Map = newMap;
+            component.TilesByMapPosition = newTilesByMapPosition;
+            component.TilesByIndex = newTilesByIndex;
             return AddComponent(CoreComponentIds.Map, component);
         }
 
-        public Entity ReplaceMap(PositionIndex newMap) {
+        public Entity ReplaceMap(PositionIndex newTilesByMapPosition, IdIndex newTilesByIndex) {
             var component = CreateComponent<MapComponent>(CoreComponentIds.Map);
-            component.Map = newMap;
+            component.TilesByMapPosition = newTilesByMapPosition;
+            component.TilesByIndex = newTilesByIndex;
             ReplaceComponent(CoreComponentIds.Map, component);
             return this;
         }
@@ -39,22 +41,22 @@ namespace Entitas {
         public MapComponent map { get { return mapEntity.map; } }
         public bool hasMap { get { return mapEntity != null; } }
 
-        public Entity SetMap(PositionIndex newMap) {
+        public Entity SetMap(PositionIndex newTilesByMapPosition, IdIndex newTilesByIndex) {
             if(hasMap) {
                 throw new EntitasException("Could not set map!\n" + this + " already has an entity with MapComponent!",
                     "You should check if the pool already has a mapEntity before setting it or use pool.ReplaceMap().");
             }
             var entity = CreateEntity();
-            entity.AddMap(newMap);
+            entity.AddMap(newTilesByMapPosition, newTilesByIndex);
             return entity;
         }
 
-        public Entity ReplaceMap(PositionIndex newMap) {
+        public Entity ReplaceMap(PositionIndex newTilesByMapPosition, IdIndex newTilesByIndex) {
             var entity = mapEntity;
             if(entity == null) {
-                entity = SetMap(newMap);
+                entity = SetMap(newTilesByMapPosition, newTilesByIndex);
             } else {
-                entity.ReplaceMap(newMap);
+                entity.ReplaceMap(newTilesByMapPosition, newTilesByIndex);
             }
 
             return entity;

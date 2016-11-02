@@ -32,6 +32,7 @@ public class SelectedComponent : IComponent { }
 [Core, SingleEntity]
 public class MapComponent : IComponent
 {
-    public PositionIndex Map;
+    public PositionIndex TilesByMapPosition;
+    public IdIndex TilesByIndex;
 }
 

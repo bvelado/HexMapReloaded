@@ -159,7 +159,7 @@ public static class MapUtilities {
     public static Entity GetNeighbor(Entity tileEntity, EDirection direction)
     {
         if(tileEntity.hasMapPosition)
-            return Pools.sharedInstance.core.map.Map.FindEntityAtMapPosition(tileEntity.mapPosition.Position + GetDirection(direction));
+            return Pools.sharedInstance.core.map.TilesByMapPosition.FindEntityAtMapPosition(tileEntity.mapPosition.Position + GetDirection(direction));
         return null;
     }
 
@@ -171,7 +171,7 @@ public static class MapUtilities {
     /// <returns>Neighbor tile</returns>
     public static Entity GetNeighbor(Vector3 originPosition, EDirection direction)
     {
-        return Pools.sharedInstance.core.map.Map.FindEntityAtMapPosition(originPosition + GetDirection(direction));
+        return Pools.sharedInstance.core.map.TilesByMapPosition.FindEntityAtMapPosition(originPosition + GetDirection(direction));
     }
 
     public static bool IsNeighbor(Entity tileA, Entity tileB)
