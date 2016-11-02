@@ -49,6 +49,7 @@ public class GameController : MonoBehaviour
 
         // Logic
         .Add(pools.parameters.CreateSystem(new ResetSelectedOnActionModeChanged()))
+        .Add(pools.parameters.CreateSystem(new ResetPathOnActionModeChanged()))
 
         // Core listeners
         .Add(pools.core.CreateSystem(new NotifyControlledListenersSystem(pools.core)))
@@ -65,8 +66,12 @@ public class GameController : MonoBehaviour
         .Add(pools.parameters.CreateSystem(new NotifyActionModeChangedListenersSystem(pools.uI)))
         .Add(pools.parameters.CreateSystem(new NotifyActionModeChangedListenersSystem(pools.view)))
 
-        .Add(pools.view.CreateSystem(new HihghlightTileViewSystem()))
+        .Add(pools.core.CreateSystem(new HihghlightTileViewSystem()))
 
-        .Add(pools.input.CreateSystem(new EndTurnSystem()));
+        .Add(pools.input.CreateSystem(new EndTurnSystem()))
+
+        .Add(pools.core.CreateSystem(new DestroySystem()))
+        .Add(pools.view.CreateSystem(new DestroySystem()))
+        .Add(pools.uI.CreateSystem(new DestroySystem()));
     }
 }

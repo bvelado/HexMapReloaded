@@ -4,7 +4,7 @@ using System;
 
 public class TileView : MonoBehaviour, ISelectable, IWalkable, IHighlightable, ISelectedListener {
 
-    private int id;
+    private int _id;
     private Vector3 _mapPosition;
     public Vector3 WorldPosition
     {

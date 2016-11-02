@@ -35,37 +35,6 @@ public class GenerateMapSystem : IInitializeSystem
     }
 }
 
-public class AddTileViewSystem : IReactiveSystem
-{
-    public static GameObject _tileContainer = new GameObject("Tile Container");
-
-    public TriggerOnEvent trigger
-    {
-        get
-        {
-            return Matcher.AllOf(CoreMatcher.Tile, CoreMatcher.MapPosition).OnEntityAdded();
-        }
-    }
-
-    public void Execute(List<Entity> entities)
-    {
-        foreach(var entity in entities)
-        {
-            var e = Pools.sharedInstance.view.CreateEntity();
-            e.AddWorldPosition(MapUtilities.MapToWorldPosition(entity.mapPosition.Position));
-            GameObject tileGO = GameObject.Instantiate(Resources.Load("Prefabs/HexTile"), e.worldPosition.Position, Quaternion.identity, _tileContainer.transform) as GameObject;
-            tileGO.name = entity.tile.Description;
-            var tileView = tileGO.AddComponent<TileView>();
-            if (tileView)
-            {
-                tileView.Initialize(entity.mapPosition.Position);
-                e.AddTileView(tileView);
-                e.AddSelectedListener(tileView);
-            }   
-        }
-    }
-}
-
 public class HighlightPathSystem : IReactiveSystem
 {
     public TriggerOnEvent trigger

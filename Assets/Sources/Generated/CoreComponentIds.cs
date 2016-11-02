@@ -11,27 +11,29 @@ public static class CoreComponentIds {
     public const int Destroy = 0;
     public const int ActionModeChangedListener = 1;
     public const int ControlledListener = 2;
-    public const int Character = 3;
-    public const int Characters = 4;
-    public const int Controllable = 5;
-    public const int Id = 6;
-    public const int Map = 7;
-    public const int MapPosition = 8;
-    public const int Path = 9;
-    public const int Selected = 10;
-    public const int Tile = 11;
-    public const int TurnOrder = 12;
+    public const int Id = 3;
+    public const int Character = 4;
+    public const int Characters = 5;
+    public const int Controllable = 6;
+    public const int Highlight = 7;
+    public const int Map = 8;
+    public const int MapPosition = 9;
+    public const int Path = 10;
+    public const int Selected = 11;
+    public const int Tile = 12;
+    public const int TurnOrder = 13;
 
-    public const int TotalComponents = 13;
+    public const int TotalComponents = 14;
 
     public static readonly string[] componentNames = {
         "Destroy",
         "ActionModeChangedListener",
         "ControlledListener",
+        "Id",
         "Character",
         "Characters",
         "Controllable",
-        "Id",
+        "Highlight",
         "Map",
         "MapPosition",
         "Path",
@@ -44,10 +46,11 @@ public static class CoreComponentIds {
         typeof(DestroyComponent),
         typeof(ActionModeChangedListenerComponent),
         typeof(ControlledListenerComponent),
+        typeof(IdComponent),
         typeof(CharacterComponent),
         typeof(CharactersComponent),
         typeof(ControllableComponent),
-        typeof(IdComponent),
+        typeof(HighlightComponent),
         typeof(MapComponent),
         typeof(MapPositionComponent),
         typeof(PathComponent),

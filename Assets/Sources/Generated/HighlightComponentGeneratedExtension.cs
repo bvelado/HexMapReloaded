@@ -12,37 +12,37 @@ namespace Entitas {
 
     public partial class Entity {
 
-        public HighlightComponent highlight { get { return (HighlightComponent)GetComponent(ViewComponentIds.Highlight); } }
-        public bool hasHighlight { get { return HasComponent(ViewComponentIds.Highlight); } }
+        public HighlightComponent highlight { get { return (HighlightComponent)GetComponent(CoreComponentIds.Highlight); } }
+        public bool hasHighlight { get { return HasComponent(CoreComponentIds.Highlight); } }
 
         public Entity AddHighlight(HighlightMode newMode) {
-            var component = CreateComponent<HighlightComponent>(ViewComponentIds.Highlight);
+            var component = CreateComponent<HighlightComponent>(CoreComponentIds.Highlight);
             component.Mode = newMode;
-            return AddComponent(ViewComponentIds.Highlight, component);
+            return AddComponent(CoreComponentIds.Highlight, component);
         }
 
         public Entity ReplaceHighlight(HighlightMode newMode) {
-            var component = CreateComponent<HighlightComponent>(ViewComponentIds.Highlight);
+            var component = CreateComponent<HighlightComponent>(CoreComponentIds.Highlight);
             component.Mode = newMode;
-            ReplaceComponent(ViewComponentIds.Highlight, component);
+            ReplaceComponent(CoreComponentIds.Highlight, component);
             return this;
         }
 
         public Entity RemoveHighlight() {
-            return RemoveComponent(ViewComponentIds.Highlight);
+            return RemoveComponent(CoreComponentIds.Highlight);
         }
     }
 }
 
-    public partial class ViewMatcher {
+    public partial class CoreMatcher {
 
         static IMatcher _matcherHighlight;
 
         public static IMatcher Highlight {
             get {
                 if(_matcherHighlight == null) {
-                    var matcher = (Matcher)Matcher.AllOf(ViewComponentIds.Highlight);
-                    matcher.componentNames = ViewComponentIds.componentNames;
+                    var matcher = (Matcher)Matcher.AllOf(CoreComponentIds.Highlight);
+                    matcher.componentNames = CoreComponentIds.componentNames;
                     _matcherHighlight = matcher;
                 }
 

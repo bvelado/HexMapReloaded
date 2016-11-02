@@ -35,7 +35,7 @@ public class RaycasterMove : MonoBehaviour, IActionModeChangedListener {
 
                     if (TryAddTileToPath(hit.transform.GetComponent<IWalkable>().GetMapPosition()))
                     {
-                        // TODO
+                        Pools.sharedInstance.core.map.TilesByMapPosition.FindEntityAtMapPosition(hit.transform.GetComponent<IWalkable>().GetMapPosition()).ReplaceHighlight(HighlightMode.Primary);
                     }
                 }
             }

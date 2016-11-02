@@ -3,6 +3,32 @@ using System.Collections.Generic;
 using Entitas;
 using UnityEngine;
 
+public class DestroySystem : IReactiveSystem, ISetPool
+{
+    Pool _pool;
+
+    public TriggerOnEvent trigger
+    {
+        get
+        {
+            return Matcher.AnyOf(CoreMatcher.Destroy, ViewMatcher.Destroy, UIMatcher.Destroy).OnEntityAdded();
+        }
+    }
+
+    public void Execute(List<Entity> entities)
+    {
+        foreach(var e in entities)
+        {
+            _pool.DestroyEntity(e);   
+        }
+    }
+
+    public void SetPool(Pool pool)
+    {
+        _pool = pool;
+    }
+}
+
 public class NotifySelectedListenersSystem : IMultiReactiveSystem
 {
     Group selectedListeners;
@@ -38,24 +64,6 @@ public class NotifySelectedListenersSystem : IMultiReactiveSystem
         {
             l.selectedListener.Listener.SelectedChanged(Pools.sharedInstance.core.selectedEntity);
         }
-
-        //Debug.Log(entities.Count);
-        //if(entities.Count > 0)
-        //{
-        //    foreach (var e in entities)
-        //    {
-        //        foreach (var l in selectedListeners.GetEntities())
-        //        {
-        //            l.selectedListener.Listener.SelectedChanged(e);
-        //        }
-        //    }
-        //} else {
-        //    foreach (var l in selectedListeners.GetEntities())
-        //    {
-        //        Debug.Log("Pas de selectedEntity");
-        //        l.selectedListener.Listener.SelectedChanged(null);
-        //    }
-        //}
     }
 }
 
@@ -104,6 +112,26 @@ public class ResetSelectedOnActionModeChanged : IReactiveSystem
         {
             if (Pools.sharedInstance.core.isSelected)
                 Pools.sharedInstance.core.selectedEntity.IsSelected(false);
+        }
+    }
+}
+
+public class ResetPathOnActionModeChanged : IReactiveSystem
+{
+    public TriggerOnEvent trigger
+    {
+        get
+        {
+            return ParametersMatcher.ActionMode.OnEntityAdded();
+        }
+    }
+
+    public void Execute(List<Entity> entities)
+    {
+        foreach (var e in entities)
+        {
+            if (Pools.sharedInstance.core.hasPath)
+                Pools.sharedInstance.core.pathEntity.IsDestroy(true);
         }
     }
 }
