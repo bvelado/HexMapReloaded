@@ -108,27 +108,22 @@ public class ResetSelectedOnActionModeChanged : IReactiveSystem
     }
 }
 
-public class ActivateSystemsOnActionMode : IExecuteSystem
+public class ActionModeSystems : Feature
 {
-    bool execute;
     ActionMode _mode;
-    Systems _systems;
 
-    public ActivateSystemsOnActionMode(ActionMode mode, Systems systems)
+    public ActionModeSystems(Pools pools, ActionMode mode) : base("ActionMode Systems")
     {
         _mode = mode;
-        _systems = systems;
 
-        Pools.sharedInstance.parameters.GetGroup(ParametersMatcher.ActionMode);
+        base.Add(pools.core.CreateSystem(new HighlightPathSystem()));
     }
 
-    public void Execute()
+    public override void Execute()
     {
-        if (execute)
+        if (Pools.sharedInstance.parameters.actionMode.Mode == _mode)
         {
-            Debug.Log(_systems.ToString() + " executing");
-            _systems.Execute();
-            _systems.Cleanup();
-        }   
+            base.Execute();
+        }
     }
 }

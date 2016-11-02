@@ -5,7 +5,7 @@ using Entitas;
 public class GameController : MonoBehaviour
 {
     Systems _systems;
-
+    Systems _actionModeMoveSystems;
     void Start()
     {
         var pools = Pools.sharedInstance;
@@ -15,17 +15,24 @@ public class GameController : MonoBehaviour
         _systems.Initialize();
 
         pools.parameters.CreateEntity().AddActionMode(ActionMode.Select);
+
+        _actionModeMoveSystems = new ActionModeSystems(pools, ActionMode.Move);
+        _actionModeMoveSystems.Initialize();
+        
     }
 
     void Update()
     {
         _systems.Execute();
         _systems.Cleanup();
+        _actionModeMoveSystems.Execute();
+        _actionModeMoveSystems.Cleanup();
     }
 
     void OnDestroy()
     {
         _systems.TearDown();
+        _actionModeMoveSystems.TearDown();
     }
 
     Systems createSystems(Pools pools)
@@ -43,9 +50,6 @@ public class GameController : MonoBehaviour
         // Logic
         .Add(pools.parameters.CreateSystem(new ResetSelectedOnActionModeChanged()))
 
-        .Add(pools.parameters.CreateSystem(new ActivateSystemsOnActionMode(ActionMode.Move, new Feature("ActionModeMove Systems")
-            .Add(pools.core.CreateSystem(new HighlightPathSystem())))))
-
         // Core listeners
         .Add(pools.core.CreateSystem(new NotifyControlledListenersSystem(pools.core)))
 
@@ -60,6 +64,8 @@ public class GameController : MonoBehaviour
 
         .Add(pools.parameters.CreateSystem(new NotifyActionModeChangedListenersSystem(pools.uI)))
         .Add(pools.parameters.CreateSystem(new NotifyActionModeChangedListenersSystem(pools.view)))
+
+        .Add(pools.view.CreateSystem(new HihghlightTileViewSystem()))
 
         .Add(pools.input.CreateSystem(new EndTurnSystem()));
     }

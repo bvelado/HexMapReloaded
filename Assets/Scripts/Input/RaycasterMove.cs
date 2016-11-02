@@ -33,7 +33,10 @@ public class RaycasterMove : MonoBehaviour, IActionModeChangedListener {
                     if (!Pools.sharedInstance.core.hasPath)
                         Pools.sharedInstance.core.CreateEntity().AddPath(new Vector3[0]);
 
-                    TryAddTileToPath(hit.transform.GetComponent<IWalkable>().GetMapPosition());
+                    if (TryAddTileToPath(hit.transform.GetComponent<IWalkable>().GetMapPosition()))
+                    {
+                        // TODO
+                    }
                 }
             }
             else if(!es.IsPointerOverGameObject())
