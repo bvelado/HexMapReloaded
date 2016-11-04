@@ -18,7 +18,7 @@ public class EndTurnSystem : IReactiveSystem, ISetPool
     {
         foreach(var e in entities)
         {
-            if (Pools.sharedInstance.core.isControllable)
+            if (e.input.Intent == InputIntent.EndTurn && Pools.sharedInstance.core.isControllable)
             {
                 bool turnHasEnded = false;
 
@@ -49,9 +49,9 @@ public class EndTurnSystem : IReactiveSystem, ISetPool
                     Pools.sharedInstance.core.controllableEntity.IsControllable(false);
                     lowestTurnOrderCharacterEntity.IsControllable(true);
                 }
-            }
 
-            e.IsDestroy(true);
+                e.IsDestroy(true);
+            }
         }
     }
 

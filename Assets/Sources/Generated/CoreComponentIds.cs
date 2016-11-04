@@ -9,44 +9,59 @@
 public static class CoreComponentIds {
 
     public const int Destroy = 0;
-    public const int ControlledListener = 1;
-    public const int Character = 2;
-    public const int Characters = 3;
-    public const int Controllable = 4;
-    public const int Id = 5;
-    public const int Map = 6;
-    public const int MapPosition = 7;
-    public const int Selected = 8;
-    public const int Tile = 9;
-    public const int TurnOrder = 10;
+    public const int ActionModeChangedListener = 1;
+    public const int ControlledListener = 2;
+    public const int Id = 3;
+    public const int Character = 4;
+    public const int Characters = 5;
+    public const int Controllable = 6;
+    public const int Highlight = 7;
+    public const int Map = 8;
+    public const int MapPosition = 9;
+    public const int Node = 10;
+    public const int Path = 11;
+    public const int Selected = 12;
+    public const int Tile = 13;
+    public const int TurnOrder = 14;
+    public const int Walkable = 15;
 
-    public const int TotalComponents = 11;
+    public const int TotalComponents = 16;
 
     public static readonly string[] componentNames = {
         "Destroy",
+        "ActionModeChangedListener",
         "ControlledListener",
+        "Id",
         "Character",
         "Characters",
         "Controllable",
-        "Id",
+        "Highlight",
         "Map",
         "MapPosition",
+        "Node",
+        "Path",
         "Selected",
         "Tile",
-        "TurnOrder"
+        "TurnOrder",
+        "Walkable"
     };
 
     public static readonly System.Type[] componentTypes = {
         typeof(DestroyComponent),
+        typeof(ActionModeChangedListenerComponent),
         typeof(ControlledListenerComponent),
+        typeof(IdComponent),
         typeof(CharacterComponent),
         typeof(CharactersComponent),
         typeof(ControllableComponent),
-        typeof(IdComponent),
+        typeof(HighlightComponent),
         typeof(MapComponent),
         typeof(MapPositionComponent),
+        typeof(NodeComponent),
+        typeof(PathComponent),
         typeof(SelectedComponent),
         typeof(TileComponent),
-        typeof(TurnOrderComponent)
+        typeof(TurnOrderComponent),
+        typeof(WalkableComponent)
     };
 }

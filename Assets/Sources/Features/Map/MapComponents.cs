@@ -32,6 +32,15 @@ public class SelectedComponent : IComponent { }
 [Core, SingleEntity]
 public class MapComponent : IComponent
 {
-    public PositionIndex Map;
+    public PositionIndex TilesByMapPosition;
+    public IdIndex TilesByIndex;
 }
 
+[Core]
+public class WalkableComponent : IComponent { }
+
+[Core]
+public class NodeComponent : IComponent
+{
+    public Node Node;
+}

@@ -6,13 +6,14 @@ using System;
 
 public class CharacterInfoPanelView : MonoBehaviour, ISelectedListener, IControlledListener
 {
+    [Header("Infos")]
     public Text Name;
     public Text Position;
 
     [Header("Action panel")]
     public GameObject ActionsPanel;
 
-    public int currentCharacterId;
+    int currentCharacterId;
 
     public void SelectedChanged(Entity selectedEntity)
     {

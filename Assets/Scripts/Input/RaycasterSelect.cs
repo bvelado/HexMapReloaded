@@ -4,13 +4,24 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
-public class RaycasterSelect : MonoBehaviour {
+public class RaycasterSelect : MonoBehaviour, IActionModeChangedListener {
 
     public EventSystem es;
     public LayerMask Layer;
 
     private RaycastHit hit;
-    
+
+    void Start()
+    {
+        Pools.sharedInstance.uI.CreateEntity().AddActionModeChangedListener(this);
+        enabled = false;
+    }
+
+    public void ActionModeChanged(ActionMode mode)
+    {
+        enabled = (mode == ActionMode.Select);
+    }
+
     void Update()
     {
         if (Input.GetMouseButtonDown(0))

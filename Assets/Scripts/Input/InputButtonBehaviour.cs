@@ -8,7 +8,6 @@ public class InputButtonBehaviour : MonoBehaviour {
 
     public void ButtonPressed()
     {
-        print("Button pressed : " + name + " with intent : " + Intent.ToString() + ".");
         Pools.sharedInstance.input.CreateEntity().AddInput(Intent);
     }
 
