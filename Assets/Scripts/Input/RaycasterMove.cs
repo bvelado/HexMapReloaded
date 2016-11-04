@@ -3,6 +3,9 @@ using Entitas;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
+using DG.Tweening;
+using System.Collections.Generic;
+using System.Collections;
 
 public class RaycasterMove : MonoBehaviour, IActionModeChangedListener {
 
@@ -11,10 +14,17 @@ public class RaycasterMove : MonoBehaviour, IActionModeChangedListener {
 
     private RaycastHit hit;
 
+    private Group mapEntities;
+
+    private Coroutine pathRequest;
+
     void Start()
     {
         Pools.sharedInstance.uI.CreateEntity().AddActionModeChangedListener(this);
         enabled = false;
+
+        if (mapEntities == null)
+            mapEntities = Pools.sharedInstance.core.GetGroup(Matcher.AllOf(CoreMatcher.Tile, CoreMatcher.MapPosition));
     }
 
     public void ActionModeChanged(ActionMode mode)
@@ -30,13 +40,21 @@ public class RaycasterMove : MonoBehaviour, IActionModeChangedListener {
             {
                 if (hit.transform && hit.transform.GetComponent<IWalkable>() != null && hit.collider.GetComponent<IWalkable>().IsWalkable())
                 {
-                    if (!Pools.sharedInstance.core.hasPath)
-                        Pools.sharedInstance.core.CreateEntity().AddPath(new Vector3[0]);
+                    //if (!Pools.sharedInstance.core.hasPath)
+                    //    Pools.sharedInstance.core.CreateEntity().AddPath(new Vector3[0]);
 
-                    if (TryAddTileToPath(hit.transform.GetComponent<IWalkable>().GetMapPosition()))
-                    {
-                        Pools.sharedInstance.core.map.TilesByMapPosition.FindEntityAtMapPosition(hit.transform.GetComponent<IWalkable>().GetMapPosition()).ReplaceHighlight(HighlightMode.Primary);
-                    }
+                    //if (TryAddTileToPath(hit.transform.GetComponent<IWalkable>().GetMapPosition()))
+                    //{
+                    //    Pools.sharedInstance.core.map.TilesByMapPosition.FindEntityAtMapPosition(hit.transform.GetComponent<IWalkable>().GetMapPosition()).ReplaceHighlight(HighlightMode.Primary);
+                    //}
+
+                    if(pathRequest != null)
+                        StopCoroutine(pathRequest);
+
+                    pathRequest = StartCoroutine(PathUtilities.ProcessPathfinding(mapEntities.GetEntities(),
+                        Pools.sharedInstance.core.map.TilesByMapPosition.FindEntityAtMapPosition(Pools.sharedInstance.core.controllableEntity.mapPosition.Position),
+                        Pools.sharedInstance.core.map.TilesByMapPosition.FindEntityAtMapPosition(hit.transform.GetComponent<IWalkable>().GetMapPosition()),
+                        DebugPath));
                 }
             }
             else if(!es.IsPointerOverGameObject())
@@ -47,28 +65,42 @@ public class RaycasterMove : MonoBehaviour, IActionModeChangedListener {
         }
     }
 
-    bool TryAddTileToPath(Vector3 MapPosition)
+    public void DebugPath(Entity[] path)
     {
-        Vector3[] PathCopy = Pools.sharedInstance.core.path.MapPositions;
+        var controllableCharacterView = Pools.sharedInstance.view.charactersView.CharacterViewById.FindEntityAtIndex(Pools.sharedInstance.core.controllableEntity.id.Id);
+        var controllableCharacter = Pools.sharedInstance.core.controllableEntity;
 
-        // Check if the last path tile exist and is neighbor
-        if(PathCopy.Length > 0)
+        List<Vector3> worldPositions = new List<Vector3>();
+        foreach(var entity in path)
         {
-            Vector3 PathLastMapPosition = PathCopy[PathCopy.Length - 1];
-            if(!MapUtilities.IsNeighbor(MapPosition, PathLastMapPosition)) {
-                return false;
-            }
+            worldPositions.Add(MapUtilities.MapToWorldPosition(entity.mapPosition.Position));
         }
 
-        PathCopy = new Vector3[Pools.sharedInstance.core.path.MapPositions.Length +1];
-        for(int i = 0; i < Pools.sharedInstance.core.path.MapPositions.Length; i++)
-        {
-            PathCopy[i] = Pools.sharedInstance.core.path.MapPositions[i];
-        }
-        PathCopy[Pools.sharedInstance.core.path.MapPositions.Length] = MapPosition;
-
-        Pools.sharedInstance.core.ReplacePath(PathCopy);
-
-        return true;
+        controllableCharacterView.characterView.View.transform.DOLocalPath(worldPositions.ToArray(), path.Length * 0.6f, PathType.Linear).OnWaypointChange((i) => controllableCharacter.ReplaceMapPosition(path[i].mapPosition.Position));
     }
+
+    //bool TryAddTileToPath(Vector3 MapPosition)
+    //{
+    //    Vector3[] PathCopy = Pools.sharedInstance.core.path.MapPositions;
+
+    //    // Check if the last path tile exist and is neighbor
+    //    if(PathCopy.Length > 0)
+    //    {
+    //        Vector3 PathLastMapPosition = PathCopy[PathCopy.Length - 1];
+    //        if(!MapUtilities.IsNeighbor(MapPosition, PathLastMapPosition)) {
+    //            return false;
+    //        }
+    //    }
+
+    //    PathCopy = new Vector3[Pools.sharedInstance.core.path.MapPositions.Length +1];
+    //    for(int i = 0; i < Pools.sharedInstance.core.path.MapPositions.Length; i++)
+    //    {
+    //        PathCopy[i] = Pools.sharedInstance.core.path.MapPositions[i];
+    //    }
+    //    PathCopy[Pools.sharedInstance.core.path.MapPositions.Length] = MapPosition;
+
+    //    Pools.sharedInstance.core.ReplacePath(PathCopy);
+
+    //    return true;
+    //}
 }

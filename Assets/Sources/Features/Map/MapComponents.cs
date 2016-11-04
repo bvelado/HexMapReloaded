@@ -36,3 +36,11 @@ public class MapComponent : IComponent
     public IdIndex TilesByIndex;
 }
 
+[Core]
+public class WalkableComponent : IComponent { }
+
+[Core]
+public class NodeComponent : IComponent
+{
+    public Node Node;
+}

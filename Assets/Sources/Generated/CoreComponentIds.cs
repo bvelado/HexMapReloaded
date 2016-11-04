@@ -18,12 +18,14 @@ public static class CoreComponentIds {
     public const int Highlight = 7;
     public const int Map = 8;
     public const int MapPosition = 9;
-    public const int Path = 10;
-    public const int Selected = 11;
-    public const int Tile = 12;
-    public const int TurnOrder = 13;
+    public const int Node = 10;
+    public const int Path = 11;
+    public const int Selected = 12;
+    public const int Tile = 13;
+    public const int TurnOrder = 14;
+    public const int Walkable = 15;
 
-    public const int TotalComponents = 14;
+    public const int TotalComponents = 16;
 
     public static readonly string[] componentNames = {
         "Destroy",
@@ -36,10 +38,12 @@ public static class CoreComponentIds {
         "Highlight",
         "Map",
         "MapPosition",
+        "Node",
         "Path",
         "Selected",
         "Tile",
-        "TurnOrder"
+        "TurnOrder",
+        "Walkable"
     };
 
     public static readonly System.Type[] componentTypes = {
@@ -53,9 +57,11 @@ public static class CoreComponentIds {
         typeof(HighlightComponent),
         typeof(MapComponent),
         typeof(MapPositionComponent),
+        typeof(NodeComponent),
         typeof(PathComponent),
         typeof(SelectedComponent),
         typeof(TileComponent),
-        typeof(TurnOrderComponent)
+        typeof(TurnOrderComponent),
+        typeof(WalkableComponent)
     };
 }

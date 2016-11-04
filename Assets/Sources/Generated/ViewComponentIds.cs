@@ -13,13 +13,14 @@ public static class ViewComponentIds {
     public const int ControlledListener = 2;
     public const int Id = 3;
     public const int SelectedListener = 4;
-    public const int CharacterView = 5;
-    public const int MapView = 6;
-    public const int PathView = 7;
-    public const int TileView = 8;
-    public const int WorldPosition = 9;
+    public const int CharactersView = 5;
+    public const int CharacterView = 6;
+    public const int MapView = 7;
+    public const int PathView = 8;
+    public const int TileView = 9;
+    public const int WorldPosition = 10;
 
-    public const int TotalComponents = 10;
+    public const int TotalComponents = 11;
 
     public static readonly string[] componentNames = {
         "Destroy",
@@ -27,6 +28,7 @@ public static class ViewComponentIds {
         "ControlledListener",
         "Id",
         "SelectedListener",
+        "CharactersView",
         "CharacterView",
         "MapView",
         "PathView",
@@ -40,6 +42,7 @@ public static class ViewComponentIds {
         typeof(ControlledListenerComponent),
         typeof(IdComponent),
         typeof(SelectedListenerComponent),
+        typeof(CharactersViewComponent),
         typeof(CharacterViewComponent),
         typeof(MapViewComponent),
         typeof(PathViewComponent),

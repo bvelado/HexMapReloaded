@@ -51,19 +51,28 @@ public class AddCharacterViewSystem : IReactiveSystem
 
     public void Execute(List<Entity> entities)
     {
-        foreach(var entity in entities)
+        if (!Pools.sharedInstance.view.hasCharactersView)
+            Pools.sharedInstance.view.CreateEntity()
+                .AddCharactersView(
+                    new IdIndex(Pools.sharedInstance.view, Matcher.AllOf(ViewMatcher.CharacterView, ViewMatcher.Id)));
+
+        foreach (var entity in entities)
         {
-            var e = Pools.sharedInstance.view.CreateEntity();
-            e.AddWorldPosition(MapUtilities.MapToWorldPosition(entity.mapPosition.Position));
-            GameObject characterGO = GameObject.Instantiate(Resources.Load("Prefabs/Character"), e.worldPosition.Position + (Vector3.back*0.25f), Quaternion.identity, _charactersContainer.transform) as GameObject;
-            characterGO.name = entity.character.Name;
-            var characterView = characterGO.AddComponent<CharacterView>();
-            if (characterView)
+            if(Pools.sharedInstance.view.charactersView.CharacterViewById.FindEntityAtIndex(entity.id.Id) == null)
             {
-                characterView.Initialize(entity.mapPosition.Position, entity.id.Id);
-                e.AddCharacterView(characterView)
-                .AddSelectedListener(characterView)
-                .AddControlledListener(characterView);
+                var e = Pools.sharedInstance.view.CreateEntity();
+                e.AddWorldPosition(MapUtilities.MapToWorldPosition(entity.mapPosition.Position));
+                GameObject characterGO = GameObject.Instantiate(Resources.Load("Prefabs/Character"), e.worldPosition.Position + (Vector3.back*0.25f), Quaternion.identity, _charactersContainer.transform) as GameObject;
+                characterGO.name = entity.character.Name;
+                var characterView = characterGO.AddComponent<CharacterView>();
+                if (characterView)
+                {
+                    characterView.Initialize(entity.mapPosition.Position, entity.id.Id);
+                    e.AddCharacterView(characterView)
+                    .AddSelectedListener(characterView)
+                    .AddControlledListener(characterView)
+                    .AddId(entity.id.Id);
+                }
             }
         }
     }

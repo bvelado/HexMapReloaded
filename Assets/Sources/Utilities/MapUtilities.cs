@@ -1,6 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
 using Entitas;
+using System;
+using System.Collections.Generic;
 
 public static class MapUtilities {
 
@@ -174,14 +176,130 @@ public static class MapUtilities {
         return Pools.sharedInstance.core.map.TilesByMapPosition.FindEntityAtMapPosition(originPosition + GetDirection(direction));
     }
 
+    /// <summary>
+    /// Returns the neighbor entity in the direction chosen
+    /// </summary>
+    /// <param name="tileEntity">Origin tile</param>
+    /// <param name="direction">Direction to search for</param>
+    /// <returns>Neighbor tile</returns>
+    public static Vector3 GetNeighborPosition(Entity tileEntity, EDirection direction)
+    {
+        if (tileEntity.hasMapPosition)
+        {
+            if (Pools.sharedInstance.core.map.TilesByMapPosition.FindEntityAtMapPosition(tileEntity.mapPosition.Position + GetDirection(direction)).mapPosition.Position != null)
+                return Pools.sharedInstance.core.map.TilesByMapPosition.FindEntityAtMapPosition(tileEntity.mapPosition.Position + GetDirection(direction)).mapPosition.Position;
+            else
+                throw (new Exception("No neighbor position found"));
+        }
+        else
+            throw (new Exception("Entity doesn't have map position"));
+    }
+
+    /// <summary>
+    /// Returns the neighbor entity in the direction chosen
+    /// </summary>
+    /// <param name="originPosition">Origin position</param>
+    /// <param name="direction">Direction to search for</param>
+    /// <returns>Neighbor tile</returns>
+    public static Vector3 GetNeighborPosition(Vector3 originPosition, EDirection direction)
+    {
+        return originPosition + GetDirection(direction);
+    }
+
+    /// <summary>
+    /// Check if the given entities are adjacent
+    /// </summary>
+    /// <param name="tileA">First tile entity</param>
+    /// <param name="tileB">Second tile entity</param>
+    /// <returns></returns>
     public static bool IsNeighbor(Entity tileA, Entity tileB)
     {
         return GetDistance(tileA, tileB) == 1;
     }
 
+    /// <summary>
+    /// Check if the given map positions are adjacent
+    /// </summary>
+    /// <param name="mapPositionA">First map position</param>
+    /// <param name="mapPositionB">Second map position</param>
+    /// <returns></returns>
     public static bool IsNeighbor(Vector3 mapPositionA, Vector3 mapPositionB)
     {
         return GetDistance(mapPositionA, mapPositionB) == 1;
+    }
+
+    /// <summary>
+    /// Returns the neighbors entities in all the directions
+    /// </summary>
+    /// <param name="tileEntity">Origin tile</param>
+    /// <returns>Neighbors tiles</returns>
+    public static Entity[] GetNeighbors(Entity originTile)
+    {
+        List<Entity> result = new List<Entity>();
+        for (int i = 0; i < Enum.GetNames(typeof(EDirection)).Length; i++)
+        {
+            if(GetNeighbor(originTile, (EDirection)i) != null)
+                result.Add(GetNeighbor(originTile, (EDirection)i));
+        }
+
+        if (result.Count > 0)
+            return result.ToArray();
+        return null;
+    }
+
+    /// <summary>
+    /// Returns the neighbors entities in all the directions
+    /// </summary>
+    /// <param name="originPosition">Origin position</param>
+    /// <returns>Neighbors tiles</returns>
+    public static Entity[] GetNeighbors(Vector3 originPosition)
+    {
+        List<Entity> result = new List<Entity>();
+        for(int i = 0; i < Enum.GetNames(typeof(EDirection)).Length; i++)
+        {
+            if (GetNeighbor(originPosition, (EDirection)i) != null)
+                result.Add(GetNeighbor(originPosition, (EDirection)i));
+        }
+        if(result.Count>0)
+            return result.ToArray();
+        return null;
+    }
+
+    /// <summary>
+    /// Returns the neighbors map positions in all the directions
+    /// </summary>
+    /// <param name="tileEntity">Origin tile</param>
+    /// <returns>Neighbors tiles</returns>
+    public static Vector3[] GetNeighborsPositions(Entity originTile)
+    {
+        List<Vector3> result = new List<Vector3>();
+        for (int i = 0; i < Enum.GetNames(typeof(EDirection)).Length; i++)
+        {
+            if (GetNeighbor(originTile, (EDirection)i) != null)
+                result.Add(GetNeighborPosition(originTile, (EDirection)i));
+        }
+
+        if (result.Count > 0)
+            return result.ToArray();
+        return null;
+    }
+
+    /// <summary>
+    /// Returns the neighbors map positions in all the directions
+    /// </summary>
+    /// <param name="originPosition">Origin position</param>
+    /// <returns>Neighbors tiles</returns>
+    public static Vector3[] GetNeighborsPositions(Vector3 originPosition)
+    {
+        List<Vector3> result = new List<Vector3>();
+        for (int i = 0; i < Enum.GetNames(typeof(EDirection)).Length; i++)
+        {
+            if (GetNeighbor(originPosition, (EDirection)i) != null)
+                result.Add(GetNeighborPosition(originPosition, (EDirection)i));
+        }
+        if (result.Count > 0)
+            return result.ToArray();
+        return null;
     }
     #endregion
 }
