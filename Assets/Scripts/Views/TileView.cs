@@ -2,7 +2,7 @@
 using Entitas;
 using System;
 
-public class TileView : MonoBehaviour, ISelectable, IWalkable, IHighlightable, ISelectedListener {
+public class TileView : MonoBehaviour, ISelectable, IWalkable, IHighlightable, IHoverable, ISelectedListener {
 
     private int _id;
     private Vector3 _mapPosition;
@@ -16,15 +16,21 @@ public class TileView : MonoBehaviour, ISelectable, IWalkable, IHighlightable, I
 
     private Color _baseColor;
 
-    public void Initialize(Vector3 MapPosition)
+    public void Initialize(Vector3 MapPosition, int Id)
     {
         _mapPosition = MapPosition;
         _baseColor = GetComponent<MeshRenderer>().material.color;
+        _id = Id;
     }
 
     public Entity GetEntity()
     {
         return Pools.sharedInstance.core.map.TilesByMapPosition.FindEntityAtMapPosition(_mapPosition);
+    }
+
+    public Entity GetViewEntity()
+    {
+        return Pools.sharedInstance.view.mapView.TileViewById.FindEntityAtIndex(_id);
     }
 
     public void Select()
@@ -67,10 +73,10 @@ public class TileView : MonoBehaviour, ISelectable, IWalkable, IHighlightable, I
                 GetComponent<MeshRenderer>().material.color = Color.blue;
                 break;
             case HighlightMode.Secondary:
-
+                GetComponent<MeshRenderer>().material.color = Color.green;
+                break;
             case HighlightMode.None:
             default:
-
                 GetComponent<MeshRenderer>().material.color = _baseColor;
 
                 break;

@@ -108,11 +108,8 @@ public class ResetSelectedOnActionModeChanged : IReactiveSystem
 
     public void Execute(List<Entity> entities)
     {
-        foreach (var e in entities)
-        {
-            if (Pools.sharedInstance.core.isSelected)
-                Pools.sharedInstance.core.selectedEntity.IsSelected(false);
-        }
+        if (Pools.sharedInstance.core.isSelected)
+            Pools.sharedInstance.core.selectedEntity.IsSelected(false);
     }
 }
 
@@ -150,8 +147,6 @@ public class ActionModeSystems : Feature
     public override void Execute()
     {
         if (Pools.sharedInstance.parameters.actionMode.Mode == _mode)
-        {
             base.Execute();
-        }
     }
 }

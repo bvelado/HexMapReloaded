@@ -16,16 +16,17 @@ public static class CoreComponentIds {
     public const int Characters = 5;
     public const int Controllable = 6;
     public const int Highlight = 7;
-    public const int Map = 8;
-    public const int MapPosition = 9;
-    public const int Node = 10;
-    public const int Path = 11;
-    public const int Selected = 12;
-    public const int Tile = 13;
-    public const int TurnOrder = 14;
-    public const int Walkable = 15;
+    public const int Hovered = 8;
+    public const int Map = 9;
+    public const int MapPosition = 10;
+    public const int Node = 11;
+    public const int Path = 12;
+    public const int Selected = 13;
+    public const int Tile = 14;
+    public const int TurnOrder = 15;
+    public const int Walkable = 16;
 
-    public const int TotalComponents = 16;
+    public const int TotalComponents = 17;
 
     public static readonly string[] componentNames = {
         "Destroy",
@@ -36,6 +37,7 @@ public static class CoreComponentIds {
         "Characters",
         "Controllable",
         "Highlight",
+        "Hovered",
         "Map",
         "MapPosition",
         "Node",
@@ -55,6 +57,7 @@ public static class CoreComponentIds {
         typeof(CharactersComponent),
         typeof(ControllableComponent),
         typeof(HighlightComponent),
+        typeof(HoveredComponent),
         typeof(MapComponent),
         typeof(MapPositionComponent),
         typeof(NodeComponent),

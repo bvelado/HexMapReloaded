@@ -66,7 +66,10 @@ public class GameController : MonoBehaviour
         .Add(pools.parameters.CreateSystem(new NotifyActionModeChangedListenersSystem(pools.uI)))
         .Add(pools.parameters.CreateSystem(new NotifyActionModeChangedListenersSystem(pools.view)))
 
-        .Add(pools.core.CreateSystem(new HihghlightTileViewSystem()))
+        .Add(pools.core.CreateSystem(new HighlightHoveredSystem()))
+        .Add(pools.core.CreateSystem(new HighlightSelectedTileSystem()))
+        
+        .Add(pools.core.CreateSystem(new HighlightTileViewSystem()))
 
         .Add(pools.input.CreateSystem(new EndTurnSystem()))
 

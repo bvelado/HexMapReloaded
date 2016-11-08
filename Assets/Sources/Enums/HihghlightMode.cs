@@ -1,7 +1,7 @@
 ﻿public enum HighlightMode
 {
-    Selected,
-    Primary,
-    Secondary,
-    None
+    Selected        = 0,
+    Primary         = 1,
+    Secondary       = 2,
+    None            = 3
 }

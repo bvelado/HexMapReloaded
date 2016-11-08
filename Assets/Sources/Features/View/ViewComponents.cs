@@ -17,3 +17,6 @@ public class CharactersViewComponent : IComponent
 public class HighlightComponent : IComponent {
     public HighlightMode Mode;
 }
+
+[Core, SingleEntity]
+public class HoveredComponent : IComponent { }

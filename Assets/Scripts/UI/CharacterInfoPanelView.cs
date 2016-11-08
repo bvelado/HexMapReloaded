@@ -17,17 +17,31 @@ public class CharacterInfoPanelView : MonoBehaviour, ISelectedListener, IControl
 
     public void SelectedChanged(Entity selectedEntity)
     {
+        // If the selected entity is actually a character
         if (selectedEntity != null && selectedEntity.hasCharacter)
         {
+            // Display the infos of the selected character
             Display();
             Fill(selectedEntity);
         }
+        // If the selected entity is a tile and is occupied by a character
         else if (selectedEntity != null && selectedEntity.hasTile && Pools.sharedInstance.core.characters.CharactersByPosition.FindEntityAtMapPosition(selectedEntity.mapPosition.Position) != null)
         {
+            // Display the infos of the character on the tile
             Display();
             Fill(Pools.sharedInstance.core.characters.CharactersByPosition.FindEntityAtMapPosition(selectedEntity.mapPosition.Position));
-        } else
+        }
+        // If no tile nor character is selected
+        else if(Pools.sharedInstance.core.isControllable)
         {
+            // Display the infos of the current controllable character
+            Display();
+            Fill(Pools.sharedInstance.core.controllableEntity);
+        }
+        // Else
+        else
+        {
+            // Hides the panel
             Clear();
             Hide();
         }

@@ -17,6 +17,7 @@ public class RaycasterMove : MonoBehaviour, IActionModeChangedListener {
     private Group mapEntities;
 
     private Coroutine pathRequest;
+    private Tween moveSequence;
 
     void Start()
     {
@@ -48,8 +49,10 @@ public class RaycasterMove : MonoBehaviour, IActionModeChangedListener {
                     //    Pools.sharedInstance.core.map.TilesByMapPosition.FindEntityAtMapPosition(hit.transform.GetComponent<IWalkable>().GetMapPosition()).ReplaceHighlight(HighlightMode.Primary);
                     //}
 
-                    if(pathRequest != null)
+                    if (pathRequest != null)
+                    {
                         StopCoroutine(pathRequest);
+                    }
 
                     pathRequest = StartCoroutine(PathUtilities.ProcessPathfinding(mapEntities.GetEntities(),
                         Pools.sharedInstance.core.map.TilesByMapPosition.FindEntityAtMapPosition(Pools.sharedInstance.core.controllableEntity.mapPosition.Position),
@@ -67,6 +70,11 @@ public class RaycasterMove : MonoBehaviour, IActionModeChangedListener {
 
     public void DebugPath(Entity[] path)
     {
+        Pools.sharedInstance.parameters.ReplaceActionMode(ActionMode.None);
+
+        if(moveSequence != null && moveSequence.IsPlaying())
+            moveSequence.Kill(false);
+
         var controllableCharacterView = Pools.sharedInstance.view.charactersView.CharacterViewById.FindEntityAtIndex(Pools.sharedInstance.core.controllableEntity.id.Id);
         var controllableCharacter = Pools.sharedInstance.core.controllableEntity;
 
@@ -75,8 +83,12 @@ public class RaycasterMove : MonoBehaviour, IActionModeChangedListener {
         {
             worldPositions.Add(MapUtilities.MapToWorldPosition(entity.mapPosition.Position));
         }
-
-        controllableCharacterView.characterView.View.transform.DOLocalPath(worldPositions.ToArray(), path.Length * 0.6f, PathType.Linear).OnWaypointChange((i) => controllableCharacter.ReplaceMapPosition(path[i].mapPosition.Position));
+        
+        moveSequence = controllableCharacterView.characterView.View.transform.DOLocalPath(worldPositions.ToArray(), path.Length * 0.6f, PathType.Linear)
+            .SetEase(Ease.Linear)
+            // Update la position à chaque waypoint
+            .OnWaypointChange((i) => { if (i != 0) controllableCharacter.ReplaceMapPosition(path[i - 1].mapPosition.Position); })
+            .OnComplete(() => Pools.sharedInstance.parameters.ReplaceActionMode(ActionMode.Select));
     }
 
     //bool TryAddTileToPath(Vector3 MapPosition)
