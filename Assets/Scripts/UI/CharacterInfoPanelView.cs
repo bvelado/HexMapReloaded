@@ -66,9 +66,9 @@ public class CharacterInfoPanelView : MonoBehaviour, ISelectedListener, IControl
 
         Position.text = "Position : " + e.mapPosition.Position.x + " , " + e.mapPosition.Position.y + " , " + e.mapPosition.Position.z;
         Name.text = "Name : " + e.character.Unit.Name;
-        HealthPoints.text = e.character.Unit.Stats.HealthPoints.ShortName + " : " + e.character.Unit.Stats.HealthPoints.CurrentValue + "/" + e.character.Unit.Stats.HealthPoints.BaseValue;
-        MovementPoints.text = e.character.Unit.Stats.MovementPoints.ShortName + " : " + e.character.Unit.Stats.MovementPoints.CurrentValue + "/" + e.character.Unit.Stats.MovementPoints.BaseValue;
-        SpeedPoints.text = e.character.Unit.Stats.SpeedPoints.ShortName + " : " + e.character.Unit.Stats.SpeedPoints.CurrentValue;
+        HealthPoints.text = e.character.Unit.Stats.HealthPoints.ShortName + " : " + e.character.Unit.Stats.HealthPoints.GetFinalValue() + "/" + e.character.Unit.Stats.HealthPoints.GetBase();
+        MovementPoints.text = e.character.Unit.Stats.MovementPoints.ShortName + " : " + e.character.Unit.Stats.MovementPoints.GetFinalValue() + "/" + e.character.Unit.Stats.MovementPoints.GetBase();
+        SpeedPoints.text = e.character.Unit.Stats.SpeedPoints.ShortName + " : " + e.character.Unit.Stats.SpeedPoints.GetFinalValue();
 
         if (e.isControllable)
             DisplayActionPanel();
