@@ -4,7 +4,7 @@ using Entitas.CodeGenerator;
 [Core]
 public class CharacterComponent : IComponent
 {
-    public string Name;
+    public Unit Unit;
 }
 
 [View]

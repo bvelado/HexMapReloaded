@@ -14,13 +14,13 @@ public class GenerateCharactersSystem : IInitializeSystem
         if (!Pools.sharedInstance.core.hasCharacters)
             Pools.sharedInstance.core.CreateEntity()
                 .AddCharacters(
-                    new IdIndex(Pools.sharedInstance.core, Matcher.AllOf(CoreMatcher.Character, CoreMatcher.Id)), 
+                    new IdIndex(Pools.sharedInstance.core, Matcher.AllOf(CoreMatcher.Character, CoreMatcher.Id)),
                     new PositionIndex(Pools.sharedInstance.core, Matcher.AllOf(CoreMatcher.Character, CoreMatcher.MapPosition)));
 
-        Stack<string> characters = new Stack<string>();
-        characters.Push("Leo");
-        characters.Push("Ken");
-        characters.Push("Alex");
+        Stack<Unit> characters = new Stack<Unit>();
+        characters.Push(new Unit("Leo", 100, 3, 60));
+        characters.Push(new Unit("Ruth", 80, 3, 70));
+        characters.Push(new Unit("Alexander", 90, 3, 68));
 
         int i = 0;
         while(characters.Count > 0)
@@ -63,7 +63,7 @@ public class AddCharacterViewSystem : IReactiveSystem
                 var e = Pools.sharedInstance.view.CreateEntity();
                 e.AddWorldPosition(MapUtilities.MapToWorldPosition(entity.mapPosition.Position));
                 GameObject characterGO = GameObject.Instantiate(Resources.Load("Prefabs/Character"), e.worldPosition.Position + (Vector3.back*0.25f), Quaternion.identity, _charactersContainer.transform) as GameObject;
-                characterGO.name = entity.character.Name;
+                characterGO.name = entity.character.Unit.Name;
                 var characterView = characterGO.AddComponent<CharacterView>();
                 if (characterView)
                 {

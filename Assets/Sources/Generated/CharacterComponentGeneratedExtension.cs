@@ -15,15 +15,15 @@ namespace Entitas {
         public CharacterComponent character { get { return (CharacterComponent)GetComponent(CoreComponentIds.Character); } }
         public bool hasCharacter { get { return HasComponent(CoreComponentIds.Character); } }
 
-        public Entity AddCharacter(string newName) {
+        public Entity AddCharacter(Unit newUnit) {
             var component = CreateComponent<CharacterComponent>(CoreComponentIds.Character);
-            component.Name = newName;
+            component.Unit = newUnit;
             return AddComponent(CoreComponentIds.Character, component);
         }
 
-        public Entity ReplaceCharacter(string newName) {
+        public Entity ReplaceCharacter(Unit newUnit) {
             var component = CreateComponent<CharacterComponent>(CoreComponentIds.Character);
-            component.Name = newName;
+            component.Unit = newUnit;
             ReplaceComponent(CoreComponentIds.Character, component);
             return this;
         }

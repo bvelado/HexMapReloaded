@@ -6,9 +6,12 @@ using System;
 
 public class CharacterInfoPanelView : MonoBehaviour, ISelectedListener, IControlledListener
 {
-    [Header("Infos")]
+    [Header("Stats")]
     public Text Name;
     public Text Position;
+    public Text HealthPoints;
+    public Text MovementPoints;
+    public Text SpeedPoints;
 
     [Header("Action panel")]
     public GameObject ActionsPanel;
@@ -32,7 +35,7 @@ public class CharacterInfoPanelView : MonoBehaviour, ISelectedListener, IControl
             Fill(Pools.sharedInstance.core.characters.CharactersByPosition.FindEntityAtMapPosition(selectedEntity.mapPosition.Position));
         }
         // If no tile nor character is selected
-        else if(Pools.sharedInstance.core.isControllable)
+        else if (Pools.sharedInstance.core.isControllable)
         {
             // Display the infos of the current controllable character
             Display();
@@ -62,7 +65,10 @@ public class CharacterInfoPanelView : MonoBehaviour, ISelectedListener, IControl
         currentCharacterId = e.id.Id;
 
         Position.text = "Position : " + e.mapPosition.Position.x + " , " + e.mapPosition.Position.y + " , " + e.mapPosition.Position.z;
-        Name.text = "Name : " + e.character.Name;
+        Name.text = "Name : " + e.character.Unit.Name;
+        HealthPoints.text = e.character.Unit.Stats.HealthPoints.ShortName + " : " + e.character.Unit.Stats.HealthPoints.CurrentValue + "/" + e.character.Unit.Stats.HealthPoints.BaseValue;
+        MovementPoints.text = e.character.Unit.Stats.MovementPoints.ShortName + " : " + e.character.Unit.Stats.MovementPoints.CurrentValue + "/" + e.character.Unit.Stats.MovementPoints.BaseValue;
+        SpeedPoints.text = e.character.Unit.Stats.SpeedPoints.ShortName + " : " + e.character.Unit.Stats.SpeedPoints.CurrentValue;
 
         if (e.isControllable)
             DisplayActionPanel();
@@ -74,6 +80,9 @@ public class CharacterInfoPanelView : MonoBehaviour, ISelectedListener, IControl
     {
         Position.text = "Position : ";
         Name.text = "Name : ";
+        HealthPoints.text = "";
+        MovementPoints.text = "";
+        SpeedPoints.text = "";
 
         HideActionPanel();
     }

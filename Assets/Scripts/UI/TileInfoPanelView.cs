@@ -11,11 +11,12 @@ public class TileInfoPanelView : MonoBehaviour, ISelectedListener {
 
     public void SelectedChanged(Entity selectedEntity)
     {
-        if(selectedEntity != null && (selectedEntity.hasTile || selectedEntity.hasCharacter))
+        if (selectedEntity != null && (selectedEntity.hasTile || selectedEntity.hasCharacter))
         {
             Display();
             Fill(selectedEntity);
-        } else
+        }
+        else
         {
             Clear();
             Hide();
@@ -33,7 +34,7 @@ public class TileInfoPanelView : MonoBehaviour, ISelectedListener {
 
         if (Pools.sharedInstance.core.characters.CharactersByPosition.FindEntityAtMapPosition(e.mapPosition.Position) != null)
         {
-            Occupied.text = Pools.sharedInstance.core.characters.CharactersByPosition.FindEntityAtMapPosition(e.mapPosition.Position).character.Name;
+            Occupied.text = Pools.sharedInstance.core.characters.CharactersByPosition.FindEntityAtMapPosition(e.mapPosition.Position).character.Unit.Name;
         }
         else
         {
