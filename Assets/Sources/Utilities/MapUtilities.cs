@@ -57,7 +57,7 @@ public static class MapUtilities {
         if (tileEntityA.hasMapPosition && tileEntityB.hasMapPosition)
             return (Mathf.Abs(tileEntityA.mapPosition.Position.x - tileEntityB.mapPosition.Position.x) +
                 Mathf.Abs(tileEntityA.mapPosition.Position.y - tileEntityB.mapPosition.Position.y) +
-                Mathf.Abs(tileEntityA.mapPosition.Position.z - tileEntityB.mapPosition.Position.z) / 2f);
+                Mathf.Abs(tileEntityA.mapPosition.Position.z - tileEntityB.mapPosition.Position.z)) / 2f;
         return -1f;
     }
 

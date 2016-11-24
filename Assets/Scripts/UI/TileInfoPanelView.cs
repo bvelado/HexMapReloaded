@@ -3,11 +3,15 @@ using System.Collections;
 using Entitas;
 using System;
 using UnityEngine.UI;
+using TMPro;
+using System.Text;
 
 public class TileInfoPanelView : MonoBehaviour, ISelectedListener {
 
-    public Text Position;
-    public Text Occupied;
+    public TextMeshProUGUI Text;
+
+    private StringBuilder sb;
+    private string originContent;
 
     public void SelectedChanged(Entity selectedEntity)
     {
@@ -23,6 +27,11 @@ public class TileInfoPanelView : MonoBehaviour, ISelectedListener {
         }
     }
     
+    void Awake()
+    {
+        originContent = Text.text;
+    }
+
     void Start () {
         Pools.sharedInstance.uI.CreateEntity().AddSelectedListener(this);
         Hide();
@@ -30,22 +39,31 @@ public class TileInfoPanelView : MonoBehaviour, ISelectedListener {
 	
     void Fill(Entity e)
     {
-        Position.text = "Position : " + e.mapPosition.Position.x + " , " + e.mapPosition.Position.y + " , " + e.mapPosition.Position.z;
+        sb = new StringBuilder(originContent);
 
+        //sb.Append("<size=\"20\"><font=\"KENPIXEL SQUARE SDF\">");
+        //sb.Append("Tile");
+        //sb.Append("</size></font>");
+        //sb.Append(Environment.NewLine);
+
+        sb.Replace("%position%", e.mapPosition.Position.x + " , " + e.mapPosition.Position.y + " , " + e.mapPosition.Position.z);
+        //sb.Append(e.mapPosition.Position.x + " , " + e.mapPosition.Position.y + " , " + e.mapPosition.Position.z);
+        
         if (Pools.sharedInstance.core.characters.CharactersByPosition.FindEntityAtMapPosition(e.mapPosition.Position) != null)
         {
-            Occupied.text = Pools.sharedInstance.core.characters.CharactersByPosition.FindEntityAtMapPosition(e.mapPosition.Position).character.Unit.Name;
-        }
-        else
+            sb.Append(Environment.NewLine);
+            sb.Replace("%occupant%", Pools.sharedInstance.core.characters.CharactersByPosition.FindEntityAtMapPosition(e.mapPosition.Position).character.Unit.Name);
+        } else
         {
-            Occupied.text = " Empty";
+            sb.Replace("%occupant%", "");
         }
+
+        Text.SetText(sb);
     }
 
     void Clear()
     {
-        Position.text = "Position :";
-        Occupied.text = "Empty";
+        Text.SetText("Title");
     }
 
     void Hide()
