@@ -3,18 +3,19 @@ using System.Collections;
 using UnityEngine.UI;
 using Entitas;
 using System;
+using TMPro;
+using System.Text;
 
 public class CharacterInfoPanelView : MonoBehaviour, ISelectedListener, IControlledListener
 {
     [Header("Stats")]
-    public Text Name;
-    public Text Position;
-    public Text HealthPoints;
-    public Text MovementPoints;
-    public Text SpeedPoints;
+    public TextMeshProUGUI Text;
 
     [Header("Action panel")]
     public GameObject ActionsPanel;
+
+    private StringBuilder sb;
+    private string originContent;
 
     int currentCharacterId;
 
@@ -54,6 +55,8 @@ public class CharacterInfoPanelView : MonoBehaviour, ISelectedListener, IControl
     {
         Pools.sharedInstance.uI.CreateEntity().AddSelectedListener(this).AddControlledListener(this);
         Hide();
+
+        originContent = Text.text;
     }
 
     /// <summary>
@@ -64,11 +67,17 @@ public class CharacterInfoPanelView : MonoBehaviour, ISelectedListener, IControl
     {
         currentCharacterId = e.id.Id;
 
-        Position.text = "Position : " + e.mapPosition.Position.x + " , " + e.mapPosition.Position.y + " , " + e.mapPosition.Position.z;
-        Name.text = "Name : " + e.character.Unit.Name;
-        HealthPoints.text = e.character.Unit.Stats.HealthPoints.ShortName + " : " + e.character.Unit.Stats.HealthPoints.GetFinalValue() + "/" + e.character.Unit.Stats.HealthPoints.GetBase();
-        MovementPoints.text = e.character.Unit.Stats.MovementPoints.ShortName + " : " + e.character.Unit.Stats.MovementPoints.GetFinalValue() + "/" + e.character.Unit.Stats.MovementPoints.GetBase();
-        SpeedPoints.text = e.character.Unit.Stats.SpeedPoints.ShortName + " : " + e.character.Unit.Stats.SpeedPoints.GetFinalValue();
+        sb = new StringBuilder(originContent);
+        
+        sb.Replace("%name%", e.character.Unit.Name);
+
+        sb.Replace("%hp%", e.character.Unit.Stats.HealthPoints.ShortName + " : " + e.character.Unit.Stats.HealthPoints.GetFinalValue() + "/" + e.character.Unit.Stats.HealthPoints.GetBase());
+
+        sb.Replace("%movp%", e.character.Unit.Stats.MovementPoints.ShortName + " : " + e.character.Unit.Stats.MovementPoints.GetFinalValue() + "/" + e.character.Unit.Stats.MovementPoints.GetBase());
+
+        sb.Replace("%speed%", e.character.Unit.Stats.SpeedPoints.ShortName + " : " + e.character.Unit.Stats.SpeedPoints.GetFinalValue());
+
+        Text.SetText(sb);
 
         if (e.isControllable)
             DisplayActionPanel();
@@ -78,11 +87,13 @@ public class CharacterInfoPanelView : MonoBehaviour, ISelectedListener, IControl
 
     void Clear()
     {
-        Position.text = "Position : ";
-        Name.text = "Name : ";
-        HealthPoints.text = "";
-        MovementPoints.text = "";
-        SpeedPoints.text = "";
+        sb = new StringBuilder();
+
+        sb.Append("<size=\"20\"><font=\"KENPIXEL SQUARE SDF\">");
+        sb.Append("Unit");
+        sb.Append("</size></font>");
+
+        Text.SetText(sb);
 
         HideActionPanel();
     }
