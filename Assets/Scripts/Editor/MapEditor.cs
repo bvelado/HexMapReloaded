@@ -3,47 +3,84 @@ using UnityEditor;
 using System.Collections;
 using System.Collections.Generic;
 
-public class MapEditor : EditorWindow {
+[CustomEditor(typeof(MapScriptableObject))]
+public class MapEditor : Editor {
+    
+    private SerializedObject serializedMap;
 
-    private string newMapName;
+    private SerializedProperty mapTitle;
+    private SerializedProperty mapTiles;
 
-    private MapScriptableObject map;
+    private Transform PreviewMapContainer;
 
-    [MenuItem("Window/MapEditor")]
-    static void Init()
+    public override void OnInspectorGUI()
     {
-        MapEditor editor = (MapEditor)EditorWindow.GetWindow<MapEditor>();
-        editor.Show();
+        serializedObject.Update();
+        EditorGUILayout.PropertyField(serializedObject.FindProperty("Title"), GUIContent.none);
+        EditorList.Show(serializedObject.FindProperty("Tiles"), EditorListOption.All);
+        serializedObject.ApplyModifiedProperties();
+
+        //if(serializedMap == null)
+        //{
+        //    serializedMap = new SerializedObject(target as MapScriptableObject);
+        //    mapTitle = serializedMap.FindProperty("Title");
+        //    mapTiles = serializedMap.FindProperty("Tiles");
+        //}
+
+        //serializedMap.Update();
+
+        //DrawCustomInspector();
+
+        //serializedMap.ApplyModifiedProperties();
     }
 
-    void OnGUI()
+    void OnSceneGUI()
     {
-        GUILayout.Label("Map Editor", EditorStyles.boldLabel);
-        if(!map)
+        if (serializedMap == null)
         {
-            GUILayout.BeginHorizontal();
-
-            newMapName = GUILayout.TextField("New map", EditorStyles.textField);
-
-            if (GUILayout.Button("Create", EditorStyles.miniButtonRight))
-            {
-                var newMap = ScriptableObject.CreateInstance<MapScriptableObject>();
-                newMap.Tiles = new List<TileScriptableObject>();
-                newMap.Title = newMapName;
-                map = newMap;
-            }
-
-            if (GUILayout.Button("Load map", EditorStyles.miniButtonRight))
-            {
-                EditorGUIUtility.ShowObjectPicker<MapScriptableObject>(map, false, "", 0);
-            }
-
-            GUILayout.EndHorizontal();
-        } else
-        {
-
+            serializedMap = new SerializedObject(target as MapScriptableObject);
+            mapTitle = serializedMap.FindProperty("Title");
+            mapTiles = serializedMap.FindProperty("Tiles");
         }
-        
+
+        if (PreviewMapContainer == null)
+        {
+            PreviewMapContainer = new GameObject("Map Preview").transform;
+            PreviewMapContainer.transform.position = Vector3.zero;
+        }   
+
+       //foreach (var tile in (target as MapScriptableObject).Tiles)
+       // {
+       //     GameObject.Instantiate(tile.ViewPrefab, MapUtilities.MapToWorldPosition(tile.MapPosition), Quaternion.identity, PreviewMapContainer);
+       // }
     }
 
+    void DrawCustomInspector()
+    {
+        GUILayout.BeginHorizontal();
+
+        GUILayout.BeginVertical();
+
+        GUILayout.Label("Map Editor  - " + target.name, EditorStyles.boldLabel);
+
+        GUILayout.EndVertical();
+
+        GUILayout.EndHorizontal();
+
+        GUILayout.BeginVertical();
+
+        GUILayout.BeginHorizontal();
+
+        EditorGUILayout.PropertyField(mapTitle, new GUIContent("Name"));
+
+        GUILayout.EndHorizontal();
+
+        GUILayout.BeginHorizontal();
+
+        EditorList.Show(mapTiles, EditorListOption.All);
+
+        GUILayout.EndHorizontal();
+
+        GUILayout.EndVertical();
+    }
 }

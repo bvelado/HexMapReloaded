@@ -1,9 +1,16 @@
 ﻿using UnityEngine;
-using System.Collections.Generic;
 
-public class TileScriptableObject : ScriptableObject {
+[System.Serializable]
+public class Tile {
 
     public Vector3 MapPosition;
-    public GameObject TilePrefab;
+    public TileScriptableObject TileSO;
 
+}
+
+[CreateAssetMenu(menuName ="Tile")]
+[System.Serializable]
+public class TileScriptableObject : ScriptableObject
+{
+    public Transform ViewPrefab;
 }
