@@ -2,7 +2,7 @@
 using Entitas.CodeGenerator;
 using UnityEngine;
 
-[Core]
+[Core, Editor]
 public class MapPositionComponent : IComponent
 {
     public Vector3 Position;
@@ -14,13 +14,13 @@ public class WorldPositionComponent : IComponent
     public Vector3 Position;
 }
 
-[Core]
+[Core, Editor]
 public class TileComponent : IComponent
 {
     public string Description;
 }
 
-[View]
+[View, Editor]
 public class TileViewComponent : IComponent
 {
     public TileView View;
@@ -29,7 +29,7 @@ public class TileViewComponent : IComponent
 [Core, SingleEntity]
 public class SelectedComponent : IComponent { }
 
-[Core, SingleEntity]
+[Core, Editor, SingleEntity]
 public class MapComponent : IComponent
 {
     public PositionIndex TilesByMapPosition;

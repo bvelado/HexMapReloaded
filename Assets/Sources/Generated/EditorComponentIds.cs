@@ -6,32 +6,38 @@
 //     the code is regenerated.
 // </auto-generated>
 //------------------------------------------------------------------------------
-public static class UIComponentIds {
+public static class EditorComponentIds {
 
-    public const int Destroy = 0;
-    public const int ActionModeChangedListener = 1;
-    public const int ControlledListener = 2;
-    public const int SelectedListener = 6;
+    public const int EditorTileView = 0;
+    public const int Id = 3;
+    public const int Map = 4;
+    public const int MapPosition = 5;
+    public const int Tile = 7;
+    public const int TileView = 8;
 
-    public const int TotalComponents = 7;
+    public const int TotalComponents = 9;
 
     public static readonly string[] componentNames = {
-        "Destroy",
-        "ActionModeChangedListener",
-        "ControlledListener",
+        "EditorTileView",
         null,
         null,
+        "Id",
+        "Map",
+        "MapPosition",
         null,
-        "SelectedListener"
+        "Tile",
+        "TileView"
     };
 
     public static readonly System.Type[] componentTypes = {
-        typeof(DestroyComponent),
-        typeof(ActionModeChangedListenerComponent),
-        typeof(ControlledListenerComponent),
+        typeof(EditorTileViewComponent),
         null,
         null,
+        typeof(IdComponent),
+        typeof(MapComponent),
+        typeof(MapPositionComponent),
         null,
-        typeof(SelectedListenerComponent)
+        typeof(TileComponent),
+        typeof(TileViewComponent)
     };
 }

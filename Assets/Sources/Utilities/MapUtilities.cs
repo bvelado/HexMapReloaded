@@ -113,6 +113,11 @@ public static class MapUtilities {
     {
         return directions[(int)direction];
     }
+
+    public static Vector3[] GetAllDirections()
+    {
+        return directions;
+    }
     #endregion
 
     #region Position conversion helpers
@@ -139,7 +144,6 @@ public static class MapUtilities {
         //      --->
         //      |
         //      V Y
-        WorldPosition.y *= -1f;
 
         return WorldPosition;
     }
@@ -147,7 +151,37 @@ public static class MapUtilities {
     public static Vector3 WorldToMapPosition(Vector3 WorldPosition)
     {
         // TODO :
-        return Vector3.zero;
+        Vector3 MapPosition = new Vector3();
+
+        MapPosition.x = ((WorldPosition.x * Mathf.Sqrt(3) / 3f) - (WorldPosition.y / 3f)) / TileSize;
+        MapPosition.z = WorldPosition.y * (2f / 3f) / TileSize;
+        MapPosition.y = -MapPosition.x - MapPosition.z;
+
+        MapPosition = Cube_Round(MapPosition);
+
+        return MapPosition;
+    }
+
+    private static Vector3 Cube_Round(Vector3 CubePos)
+    {
+        Vector3 RoundedCubePos = new Vector3();
+
+        RoundedCubePos.x = Mathf.Round(CubePos.x);
+        RoundedCubePos.y = Mathf.Round(CubePos.y);
+        RoundedCubePos.z = Mathf.Round(CubePos.z);
+
+        var xDiff = Mathf.Abs(RoundedCubePos.x - CubePos.x);
+        var yDiff = Mathf.Abs(RoundedCubePos.y - CubePos.y);
+        var zDiff = Mathf.Abs(RoundedCubePos.z - CubePos.z);
+
+        if (xDiff > yDiff && xDiff > zDiff)
+            RoundedCubePos.x = -RoundedCubePos.y - RoundedCubePos.z;
+        else if (yDiff > zDiff)
+            RoundedCubePos.y = -RoundedCubePos.x - RoundedCubePos.z;
+        else
+            RoundedCubePos.z = -RoundedCubePos.x - RoundedCubePos.y;
+
+        return RoundedCubePos;
     }
     #endregion
 

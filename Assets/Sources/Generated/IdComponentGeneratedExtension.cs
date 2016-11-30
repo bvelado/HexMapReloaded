@@ -51,6 +51,23 @@ namespace Entitas {
         }
     }
 
+    public partial class EditorMatcher {
+
+        static IMatcher _matcherId;
+
+        public static IMatcher Id {
+            get {
+                if(_matcherId == null) {
+                    var matcher = (Matcher)Matcher.AllOf(EditorComponentIds.Id);
+                    matcher.componentNames = EditorComponentIds.componentNames;
+                    _matcherId = matcher;
+                }
+
+                return _matcherId;
+            }
+        }
+    }
+
     public partial class ViewMatcher {
 
         static IMatcher _matcherId;

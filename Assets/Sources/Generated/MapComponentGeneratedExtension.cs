@@ -84,3 +84,20 @@ namespace Entitas {
             }
         }
     }
+
+    public partial class EditorMatcher {
+
+        static IMatcher _matcherMap;
+
+        public static IMatcher Map {
+            get {
+                if(_matcherMap == null) {
+                    var matcher = (Matcher)Matcher.AllOf(EditorComponentIds.Map);
+                    matcher.componentNames = EditorComponentIds.componentNames;
+                    _matcherMap = matcher;
+                }
+
+                return _matcherMap;
+            }
+        }
+    }

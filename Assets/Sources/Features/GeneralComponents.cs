@@ -12,7 +12,7 @@ public class SelectedListenerComponent : IComponent
     public ISelectedListener Listener;
 }
 
-[Core, View]
+[Core, View, Editor]
 public class IdComponent : IComponent
 {
     public int Id;

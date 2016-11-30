@@ -12,12 +12,12 @@ public static class ViewComponentIds {
     public const int ActionModeChangedListener = 1;
     public const int ControlledListener = 2;
     public const int Id = 3;
-    public const int SelectedListener = 4;
-    public const int CharactersView = 5;
-    public const int CharacterView = 6;
+    public const int CharactersView = 4;
+    public const int CharacterView = 5;
+    public const int SelectedListener = 6;
     public const int MapView = 7;
-    public const int PathView = 8;
-    public const int TileView = 9;
+    public const int TileView = 8;
+    public const int PathView = 9;
     public const int WorldPosition = 10;
 
     public const int TotalComponents = 11;
@@ -27,12 +27,12 @@ public static class ViewComponentIds {
         "ActionModeChangedListener",
         "ControlledListener",
         "Id",
-        "SelectedListener",
         "CharactersView",
         "CharacterView",
+        "SelectedListener",
         "MapView",
-        "PathView",
         "TileView",
+        "PathView",
         "WorldPosition"
     };
 
@@ -41,12 +41,12 @@ public static class ViewComponentIds {
         typeof(ActionModeChangedListenerComponent),
         typeof(ControlledListenerComponent),
         typeof(IdComponent),
-        typeof(SelectedListenerComponent),
         typeof(CharactersViewComponent),
         typeof(CharacterViewComponent),
+        typeof(SelectedListenerComponent),
         typeof(MapViewComponent),
-        typeof(PathViewComponent),
         typeof(TileViewComponent),
+        typeof(PathViewComponent),
         typeof(WorldPositionComponent)
     };
 }

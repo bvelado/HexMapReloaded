@@ -12,27 +12,44 @@ namespace Entitas {
 
     public partial class Entity {
 
-        public TileViewComponent tileView { get { return (TileViewComponent)GetComponent(ViewComponentIds.TileView); } }
-        public bool hasTileView { get { return HasComponent(ViewComponentIds.TileView); } }
+        public TileViewComponent tileView { get { return (TileViewComponent)GetComponent(EditorComponentIds.TileView); } }
+        public bool hasTileView { get { return HasComponent(EditorComponentIds.TileView); } }
 
         public Entity AddTileView(TileView newView) {
-            var component = CreateComponent<TileViewComponent>(ViewComponentIds.TileView);
+            var component = CreateComponent<TileViewComponent>(EditorComponentIds.TileView);
             component.View = newView;
-            return AddComponent(ViewComponentIds.TileView, component);
+            return AddComponent(EditorComponentIds.TileView, component);
         }
 
         public Entity ReplaceTileView(TileView newView) {
-            var component = CreateComponent<TileViewComponent>(ViewComponentIds.TileView);
+            var component = CreateComponent<TileViewComponent>(EditorComponentIds.TileView);
             component.View = newView;
-            ReplaceComponent(ViewComponentIds.TileView, component);
+            ReplaceComponent(EditorComponentIds.TileView, component);
             return this;
         }
 
         public Entity RemoveTileView() {
-            return RemoveComponent(ViewComponentIds.TileView);
+            return RemoveComponent(EditorComponentIds.TileView);
         }
     }
 }
+
+    public partial class EditorMatcher {
+
+        static IMatcher _matcherTileView;
+
+        public static IMatcher TileView {
+            get {
+                if(_matcherTileView == null) {
+                    var matcher = (Matcher)Matcher.AllOf(EditorComponentIds.TileView);
+                    matcher.componentNames = EditorComponentIds.componentNames;
+                    _matcherTileView = matcher;
+                }
+
+                return _matcherTileView;
+            }
+        }
+    }
 
     public partial class ViewMatcher {
 
